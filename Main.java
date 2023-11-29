@@ -12,7 +12,7 @@ public class Main {
     }
 
     public static void scheduling() {
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);1
         System.out.print("Priority queue: press 1, Round robin: press 2: ");
         String choice = scanner.nextLine();
          while (!choice.equals("1") && !choice.equals("2")) {
