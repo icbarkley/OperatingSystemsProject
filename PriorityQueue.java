@@ -12,8 +12,8 @@ public class PriorityQueue implements Runnable{
     public void run() {
         try {
             Utilities.printHeadLine("Start the OS");
-            OperatingSystem os = new OperatingSystem();
-            OperatingSystem.setMethod("PQ");
+            OS os = new OS();
+            OS.setMethod("PQ");
 
 //        create a process
             PCB pcb1 = new PCB();
@@ -30,8 +30,8 @@ public class PriorityQueue implements Runnable{
 
 
 //        add it to the os
-            os.addNewProcess(time);
-            os.addNewProcess(time2);
+            os.addProcess(time);
+            os.addProcess(time2);
             os.start();
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());

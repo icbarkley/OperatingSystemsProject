@@ -55,7 +55,7 @@ public class Notifier {
         {
             Utilities.print("This timer task will be called every 1 second");
             numberCount++;
-            OperatingSystem.setIsExecutingAProcess(false);
+            OS.setIsExecutingAProcess(false);
 
             if (numberCount == setLimit)
             {

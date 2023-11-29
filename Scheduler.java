@@ -7,9 +7,9 @@ public class Scheduler {
     Map<Integer, Integer> idAndBurstTimeMap;
     ProcessWareHouse processWareHouse;
     Dispatcher dispatcher;
-    OperatingSystem osController;
+    OS osController;
 
-    public Scheduler(OperatingSystem osController) {
+    public Scheduler(OS osController) {
         this.priorityQueue = new LinkedList<Integer>();
         this.idAndBurstTimeMap = new HashMap<Integer, Integer>();
         this.osController = osController;
@@ -35,14 +35,14 @@ public class Scheduler {
     //end
 
     public void start() {
-        if (OperatingSystem.isPriorityQueueMethod()) {
+        if (OS.isPriorityQueueMethod()) {
 //            HashMap (key:id - value:priority) to keep history of all the processes that had been added either ready or terminated
 //            From HashMap create the priority queue of Ids based on the process priority
             createIdAndBurstTimeMap();
             createPriorityQueueFromMap();
         }
 
-        if (OperatingSystem.isRoundRobinMethod()) {
+        if (OS.isRoundRobinMethod()) {
 //             No need to create additional data structure since the process is poll off from ready Queue
 //            from ProcessWareHouse
             Utilities.printSubLine("In Scheduler: The process is picked from the Ready Queue");
@@ -55,13 +55,13 @@ public class Scheduler {
 //        depend on the method, if PQ then pull the id out of PQ, search for that process, execute that process and erase that process
 //        if RR, just pull the most current process, execute a while and put it back
 
-        if (OperatingSystem.isPriorityQueueMethod()) {
+        if (OS.isPriorityQueueMethod()) {
             com.company.Process process = getProcessIfPriorityQueueMethod();
             Utilities.printSubLine("In scheduler: The retrieved process id: " + process.processControlBlock.getId());
             return process;
         }
 
-        if (OperatingSystem.isRoundRobinMethod()) {
+        if (OS.isRoundRobinMethod()) {
             Process process = getProcessIfRoundRobinMethod();
             Utilities.printSubLine("In scheduler: The retrieved process id: " + process.processControlBlock.getId());
             return process;

@@ -14,8 +14,8 @@ public class RoundRobin implements Runnable {
     public void run() {
         try{
             Utilities.printHeadLine("Start the OS");
-            OperatingSystem os = new OperatingSystem();
-            OperatingSystem.setMethod("RR");
+            OS os = new OS();
+            OS.setMethod("RR");
 
 //        create a process
             PCB pcb3 = new PCB();
@@ -31,8 +31,8 @@ public class RoundRobin implements Runnable {
             Process time4 = new ProcessCalulation(pcb4);
 
 //        add it to the os
-            os.addNewProcess(time3);
-            os.addNewProcess(time4);
+            os.addProcess(time3);
+            os.addProcess(time4);
             os.start();
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());

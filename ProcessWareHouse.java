@@ -18,9 +18,9 @@ public class ProcessWareHouse<V> {
 
     Dispatcher dispatcher;
     // OS
-    OperatingSystem osController;
+    OS osController;
 
-    public ProcessWareHouse(OperatingSystem os) {
+    public ProcessWareHouse(OS os) {
         this.jobQueue = new LinkedList<>();
         this.readyQueue = new LinkedList<>();
         this.waitQueue = new LinkedList<>();
@@ -40,8 +40,8 @@ public class ProcessWareHouse<V> {
 
 //  Based on the method PQ or RR, the data structure will be different
     public Collection<Process> getReadyQueue() {
-        if (OperatingSystem.isPriorityQueueMethod()) { return getReadyQueueIfPriorityQueue(); }
-        if (OperatingSystem.isRoundRobinMethod()) { return getReadyQueueIfRoundRobin(); }
+        if (OS.isPriorityQueueMethod()) { return getReadyQueueIfPriorityQueue(); }
+        if (OS.isRoundRobinMethod()) { return getReadyQueueIfRoundRobin(); }
         return null;
     }
     public Queue<Process> getReadyQueueIfRoundRobin() { return this.readyQueue; }
@@ -110,11 +110,11 @@ public class ProcessWareHouse<V> {
         try {
             Utilities.print("In PWH: Add most current process to ready queue");
             osController.changeProcessStateToReady(process);
-            if (OperatingSystem.isPriorityQueueMethod()) {
+            if (OS.isPriorityQueueMethod()) {
                 this.addProcessToReadyQueueInLinkedList(process);
             }
 
-            else if (OperatingSystem.isRoundRobinMethod()) {
+            else if (OS.isRoundRobinMethod()) {
                 Utilities.print("In PWH: Add most current process to ready queue in Round RObin");
                 this.moveCurrentProcessToTheEndOfReadyQueue(process);
             }
@@ -127,7 +127,7 @@ public class ProcessWareHouse<V> {
     //Round robin implementation
     //get the most current process
     public Process getMostCurrentProcessFromReadyQueue() {
-        if (OperatingSystem.isRoundRobinMethod()) {
+        if (OS.isRoundRobinMethod()) {
             if (!isQueueEmpty(readyQueue)) {
                 Utilities.print("In PWH: Remove most current process from ready queue");
                 Process process = this.readyQueue.poll();

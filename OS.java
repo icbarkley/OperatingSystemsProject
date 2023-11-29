@@ -2,7 +2,7 @@ package com.company;
 
 import java.util.Collection;
 
-public class OperatingSystem {
+public class OS {
     ProcessWareHouse pool;
     Scheduler scheduler;
     Dispatcher dispatcher;
@@ -24,7 +24,7 @@ public class OperatingSystem {
     }
 
     public static void setIsExecutingAProcess(boolean isExecutingAProcess) {
-        OperatingSystem.isExecutingAProcess = isExecutingAProcess;
+        OS.isExecutingAProcess = isExecutingAProcess;
     }
 
     public static boolean isExecutingAProcess;
@@ -34,30 +34,30 @@ public class OperatingSystem {
     }
 
     public static void setIdCurrentExecutingProcess(int idCurrentExecutingProcess) {
-        OperatingSystem.idCurrentExecutingProcess = idCurrentExecutingProcess;
+        OS.idCurrentExecutingProcess = idCurrentExecutingProcess;
     }
 
     public static int idCurrentExecutingProcess;
 
     public static void setMethod(String method) {
-        OperatingSystem.method = method;
+        OS.method = method;
     }
 
-    public OperatingSystem() {
+    public OS() {
         this.pool = new ProcessWareHouse(this);
         this.scheduler = new Scheduler(this);
         this.dispatcher = new Dispatcher(this);
         this.cpu = new CPU();
     }
 
-    public OperatingSystem(ProcessWareHouse pool, Scheduler scheduler, Dispatcher dispatcher, CPU cpu) {
+    public OS(ProcessWareHouse pool, Scheduler scheduler, Dispatcher dispatcher, CPU cpu) {
         this.pool = pool;
         this.scheduler = scheduler;
         this.dispatcher = dispatcher;
         this.cpu = cpu;
     }
 
-    public OperatingSystem getOSController() {
+    public OS getOSController() {
         return this;
     }
 
@@ -100,7 +100,7 @@ public class OperatingSystem {
     }
 
     // new process will be added to job pool then move to ready queue
-    public void addNewProcess(Process process) {
+    public void addProcess(Process process) {
         try {
             Utilities.printHeadLine("A new process is created in the OS");
             //Os talk to the process ware house
@@ -123,11 +123,11 @@ public class OperatingSystem {
     // end of main functionalities
 
     // Utilities
-    static boolean isPriorityQueueMethod() {return  OperatingSystem.method.equals("PQ");}
+    static boolean isPriorityQueueMethod() {return  OS.method.equals("PQ");}
 
-    static boolean isRoundRobinMethod() {return  OperatingSystem.method.equals("RR");}
+    static boolean isRoundRobinMethod() {return  OS.method.equals("RR");}
 
-    static String getMethod() {return OperatingSystem.method;}
+    static String getMethod() {return OS.method;}
 
 
     public ProcessWareHouse getPool() {

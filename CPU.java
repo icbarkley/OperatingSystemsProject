@@ -19,7 +19,7 @@ public class CPU {
     public void toExecute() {
         int id = current.processControlBlock.getId();
         Utilities.print("CPU is executing " + "process id: " + id);
-        OperatingSystem.setIdCurrentExecutingProcess(id);
+        OS.setIdCurrentExecutingProcess(id);
         this.current.toExecute();
     }
 

@@ -6,31 +6,31 @@ public class Dispatcher {
     ProcessWareHouse processWareHouse;
     CPU cpu;
     String method;
-    OperatingSystem osController;
+    OS osController;
     static int timeQuantum; // Equal 1 by default
 
-    public Dispatcher(OperatingSystem osController) {
+    public Dispatcher(OS osController) {
         //dispatcher feed process directly to cpu and force it to execute current process
         this.cpu = new CPU();
         this.osController = osController;
-        this.method = OperatingSystem.getMethod();
+        this.method = OS.getMethod();
         timeQuantum = 1;
     }
 
     //main functionality
     public void start() {
-        if (OperatingSystem.isPriorityQueueMethod()) {
+        if (OS.isPriorityQueueMethod()) {
             startWithPriorityQueueMethod();
         }
 
-        if (OperatingSystem.isRoundRobinMethod()) {
+        if (OS.isRoundRobinMethod()) {
             startWithRoundRobinMethod();
         }
     }
 
     public void startWithPriorityQueueMethod() {
         try {
-            if (!OperatingSystem.isExecutingAProcess()) {
+            if (!OS.isExecutingAProcess()) {
                 Process process = this.getProcessFromScheduler();
                 this.processWareHouse.removeProcessFromReadyQueueInLinkedListById(process.processControlBlock.getId());
                 //move this to ready state
@@ -39,12 +39,12 @@ public class Dispatcher {
 
                 //move to run state and execute the process
                 changeStateToRun(process);
-                OperatingSystem.setIsExecutingAProcess(true);
+                OS.setIsExecutingAProcess(true);
                 this.cpu.setCurrent(process);
                 this.cpu.toExecute();
 
                 // move process to completed
-                if (!OperatingSystem.isExecutingAProcess())
+                if (!OS.isExecutingAProcess())
                     changeStateToCompleted(process);
 
                 if (processWareHouse.isQueueEmpty(processWareHouse.readyQueue)) {

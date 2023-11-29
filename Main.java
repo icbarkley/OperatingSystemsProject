@@ -31,8 +31,8 @@ public class Main {
     public static void simulateRoundRobin() {
         try{
             Utilities.printHeadLine("Start the OS");
-            OperatingSystem os = new OperatingSystem();
-            OperatingSystem.setMethod("RR");
+            OS os = new OS();
+            OS.setMethod("RR");
 
 //        create a process
             PCB pcb3 = new PCB();
@@ -46,8 +46,8 @@ public class Main {
             Process time4 = new ProcessCalulation(pcb4);
 
 //        add it to the os
-            os.addNewProcess(time3);
-            os.addNewProcess(time4);
+            os.addProcess(time3);
+            os.addProcess(time4);
             os.start();
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
@@ -57,8 +57,8 @@ public class Main {
     public static void simulatePriorityQueue() {
         try{
             Utilities.printHeadLine("Start the OS");
-            OperatingSystem os = new OperatingSystem();
-            OperatingSystem.setMethod("PQ");
+            OS os = new OS();
+            OS.setMethod("PQ");
 
 //        create a process
             PCB pcb1 = new PCB();
@@ -72,8 +72,8 @@ public class Main {
             Process time2 = new ProcessCalulation(pcb2);
 
 //        add it to the os
-            os.addNewProcess(time);
-            os.addNewProcess(time2);
+            os.addProcess(time);
+            os.addProcess(time2);
 //        start the OS
             os.start();
         } catch (Exception e) {

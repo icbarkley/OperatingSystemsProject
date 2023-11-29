@@ -13,7 +13,7 @@ public class ProcessCalulation extends Process {
 
     @Override
     public void toExecute() {
-        if (OperatingSystem.isPriorityQueueMethod()) {
+        if (OS.isPriorityQueueMethod()) {
             Utilities.print("Process id:" + this.processControlBlock.getId()
                     + " is being executed");
 
@@ -23,7 +23,7 @@ public class ProcessCalulation extends Process {
             this.toTerminate();
         }
 
-        if (OperatingSystem.isRoundRobinMethod()) {
+        if (OS.isRoundRobinMethod()) {
             Utilities.print("Process id:" + this.processControlBlock.getId()
                     + " is being executed for " + Dispatcher.timeQuantum + " time quantum.");
             int newBurstTime = this.processControlBlock.getBurstTime() - 1;
@@ -40,7 +40,7 @@ public class ProcessCalulation extends Process {
     public void toTerminate() {
         Utilities.print("Process id:" + this.processControlBlock.getId()
                 + " is terminated");
-        OperatingSystem.setIsExecutingAProcess(false);
+        OS.setIsExecutingAProcess(false);
     }
 
     @Override
