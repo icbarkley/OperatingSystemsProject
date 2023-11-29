@@ -1,8 +1,8 @@
 package com.company;
 
-public class PQThread implements Runnable{
+public class PriorityQueue implements Runnable{
     Thread t;
-    public PQThread() {
+    public PriorityQueue() {
         Utilities.printHeadLine("In thread PQ");
         t = new Thread(this);
         t.start();

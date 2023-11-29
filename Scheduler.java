@@ -56,7 +56,7 @@ public class Scheduler {
 //        if RR, just pull the most current process, execute a while and put it back
 
         if (OperatingSystem.isPriorityQueueMethod()) {
-            Process process = getProcessIfPriorityQueueMethod();
+            com.company.Process process = getProcessIfPriorityQueueMethod();
             Utilities.printSubLine("In scheduler: The retrieved process id: " + process.processControlBlock.getId());
             return process;
         }

@@ -2,7 +2,7 @@ package com.company;
 import java.lang.Math;
 
 public class CalculateProcess extends Process {
-//    ProcessControlBlock processControlBlock;
+    //    ProcessControlBlock processControlBlock;
     boolean isFinished;
 
     public CalculateProcess(ProcessControlBlock processControlBlock) {

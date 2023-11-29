@@ -83,7 +83,7 @@ public class Main {
     }
 
     public static void multithreading() {
-        new PQThread();
-        new RRThread();
+        new PriorityQueue();
+        new RoundRobin();
     }
 }

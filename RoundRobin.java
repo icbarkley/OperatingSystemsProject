@@ -1,9 +1,9 @@
 package com.company;
 
-public class RRThread implements Runnable {
+public class RoundRobin implements Runnable {
     Thread t;
 
-    public RRThread() {
+    public RoundRobin() {
         Utilities.printHeadLine("In RR thread");
         t = new Thread(this);
         t.start();
