@@ -1,9 +1,9 @@
 package com.company;
 
-public class PQThread implements Runnable{
+public class NLThread implements Runnable{
     Thread t;
-    public PQThread() {
-        Utilities.printHeadLine("In thread PQ");
+    public NLThread() {
+        Utilities.printHeadLine("In thread NL");
         t = new Thread(this);
         t.start();
     }
@@ -13,7 +13,7 @@ public class PQThread implements Runnable{
         try {
             Utilities.printHeadLine("Start the OS");
             OperatingSystem os = new OperatingSystem();
-            OperatingSystem.setMethod("PQ");
+            OperatingSystem.setMethod("NL");
 
 //        create a process
             ProcessControlBlock pcb1 = new ProcessControlBlock();
