@@ -1,36 +1,38 @@
 package com.company;
 
+import javax.management.OperationsException;
+
 // will take a process from scheduler and change state and assign to cpu
 public class Dispatcher {
     Scheduler scheduler;
     ProcessWareHouse processWareHouse;
     CPU cpu;
     String method;
-    OS osController;
+    OperatingSystem osController;
     static int timeQuantum; // Equal 1 by default
 
-    public Dispatcher(OS osController) {
+    public Dispatcher(OperatingSystem osController) {
         //dispatcher feed process directly to cpu and force it to execute current process
         this.cpu = new CPU();
         this.osController = osController;
-        this.method = OS.getMethod();
+        this.method = OperatingSystem.getMethod();
         timeQuantum = 1;
     }
 
     //main functionality
     public void start() {
-        if (OS.isPriorityQueueMethod()) {
+        if (OperatingSystem.isPriorityQueueMethod()) {
             startWithPriorityQueueMethod();
         }
 
-        if (OS.isRoundRobinMethod()) {
+        if (OperatingSystem.isRoundRobinMethod()) {
             startWithRoundRobinMethod();
         }
     }
 
     public void startWithPriorityQueueMethod() {
         try {
-            if (!OS.isExecutingAProcess()) {
+            if (!OperatingSystem.isExecutingAProcess()) {
                 Process process = this.getProcessFromScheduler();
                 this.processWareHouse.removeProcessFromReadyQueueInLinkedListById(process.processControlBlock.getId());
                 //move this to ready state
@@ -39,12 +41,12 @@ public class Dispatcher {
 
                 //move to run state and execute the process
                 changeStateToRun(process);
-                OS.setIsExecutingAProcess(true);
-                this.cpu.setCurrent(process);
+                OperatingSystem.setIsExecutingAProcess(true);
+                this.cpu.setCurrentProcess(process);
                 this.cpu.toExecute();
 
                 // move process to completed
-                if (!OS.isExecutingAProcess())
+                if (!OperatingSystem.isExecutingAProcess())
                     changeStateToCompleted(process);
 
                 if (processWareHouse.isQueueEmpty(processWareHouse.readyQueue)) {
@@ -62,7 +64,7 @@ public class Dispatcher {
             Utilities.print("In Dispatcher: process id: " + process.processControlBlock.getId() +
                     "- total time needed to finish: " + process.processControlBlock.getBurstTime());
             changeStateToRun(process);
-            this.cpu.setCurrent(process);
+            this.cpu.setCurrentProcess(process);
             this.cpu.toExecute();
             Utilities.printBreakLine();
             if (process.processControlBlock.getBurstTime() > 0) {
