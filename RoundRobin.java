@@ -22,13 +22,13 @@ public class RoundRobin implements Runnable {
             pcb3.setId(3);
 //            pcb3.setPriority(6);
             pcb3.setBurstTime(3);
-            Process time3= new CalculateProcess(pcb3);
+            Process time3= new ProcessCalulation(pcb3);
 
             PCB pcb4 = new PCB();
             pcb4.setId(4);
 //            pcb4.setPriority(1);
             pcb4.setBurstTime(2);
-            Process time4 = new CalculateProcess(pcb4);
+            Process time4 = new ProcessCalulation(pcb4);
 
 //        add it to the os
             os.addNewProcess(time3);

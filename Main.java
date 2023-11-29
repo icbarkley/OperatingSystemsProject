@@ -39,12 +39,12 @@ public class Main {
             PCB pcb3 = new PCB();
             pcb3.setId(3);
             pcb3.setBurstTime(2);
-            Process time3= new CalculateProcess(pcb3);
+            Process time3= new ProcessCalulation(pcb3);
 
             PCB pcb4 = new PCB();
             pcb4.setId(4);
             pcb4.setBurstTime(2);
-            Process time4 = new CalculateProcess(pcb4);
+            Process time4 = new ProcessCalulation(pcb4);
 
 //        add it to the os
             os.addNewProcess(time3);
@@ -65,12 +65,12 @@ public class Main {
             PCB pcb1 = new PCB();
             pcb1.setId(1);
             pcb1.setPriority(6);
-            Process time = new CalculateProcess(pcb1);
+            Process time = new ProcessCalulation(pcb1);
 
             PCB pcb2 = new PCB();
             pcb2.setId(2);
             pcb2.setPriority(1);
-            Process time2 = new CalculateProcess(pcb2);
+            Process time2 = new ProcessCalulation(pcb2);
 
 //        add it to the os
             os.addNewProcess(time);

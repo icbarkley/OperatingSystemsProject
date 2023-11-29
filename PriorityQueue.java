@@ -20,13 +20,13 @@ public class PriorityQueue implements Runnable{
             pcb1.setId(1);
             pcb1.setPriority(6);
 //            pcb1.setBurstTime(5);
-            Process time = new CalculateProcess(pcb1);
+            Process time = new ProcessCalulation(pcb1);
 
             PCB pcb2 = new PCB();
             pcb2.setId(2);
             pcb2.setPriority(1);
 //            pcb2.setBurstTime(3);
-            Process time2 = new CalculateProcess(pcb2);
+            Process time2 = new ProcessCalulation(pcb2);
 
 
 //        add it to the os

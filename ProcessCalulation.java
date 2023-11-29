@@ -1,11 +1,11 @@
 package com.company;
 import java.lang.Math;
 
-public class CalculateProcess extends Process {
+public class ProcessCalulation extends Process {
     //    ProcessControlBlock processControlBlock;
     boolean isFinished;
 
-    public CalculateProcess(PCB processControlBlock) {
+    public ProcessCalulation(PCB processControlBlock) {
         this.processControlBlock = processControlBlock;
         this.isFinished = false;
         Utilities.print("A new calculate process with id:" + this.processControlBlock.getId() + " is created.");
@@ -14,7 +14,7 @@ public class CalculateProcess extends Process {
     @Override
     public void toExecute() {
         if (OperatingSystem.isPriorityQueueMethod()) {
-            Utilities.print("Calcualte process id:" + this.processControlBlock.getId()
+            Utilities.print("Process id:" + this.processControlBlock.getId()
                     + " is being executed");
 
 
@@ -24,7 +24,7 @@ public class CalculateProcess extends Process {
         }
 
         if (OperatingSystem.isRoundRobinMethod()) {
-            Utilities.print("Calcualte process id:" + this.processControlBlock.getId()
+            Utilities.print("Process id:" + this.processControlBlock.getId()
                     + " is being executed for " + Dispatcher.timeQuantum + " time quantum.");
             int newBurstTime = this.processControlBlock.getBurstTime() - 1;
             if  (newBurstTime <= 0) {
@@ -38,7 +38,7 @@ public class CalculateProcess extends Process {
 
     @Override
     public void toTerminate() {
-        Utilities.print("Calculate process id:" + this.processControlBlock.getId()
+        Utilities.print("Process id:" + this.processControlBlock.getId()
                 + " is terminated");
         OperatingSystem.setIsExecutingAProcess(false);
     }
