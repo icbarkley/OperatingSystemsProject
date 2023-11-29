@@ -1,26 +1,26 @@
 package com.company;
 
 public class CPU {
-    Process currentProcess;
+    Process current;
 
     public CPU() {
-        this.currentProcess = null;
+        this.current = null;
     }
 
-    public Process getCurrentProcess() {
-        return currentProcess;
+    public Process getCurrent() {
+        return current;
     }
 
-    public void setCurrentProcess(Process process) {
-        this.currentProcess = process;
-        Utilities.print("CPU get a new process - " + "process id: " + currentProcess.processControlBlock.getId());
+    public void setCurrent(Process process) {
+        this.current = process;
+        Utilities.print("CPU get a new process - " + "process id: " + current.processControlBlock.getId());
     }
 
     public void toExecute() {
-        int id = currentProcess.processControlBlock.getId();
+        int id = current.processControlBlock.getId();
         Utilities.print("CPU is executing " + "process id: " + id);
         OperatingSystem.setIdCurrentExecutingProcess(id);
-        this.currentProcess.toExecute();
+        this.current.toExecute();
     }
 
     public void toExecute(Process process) {

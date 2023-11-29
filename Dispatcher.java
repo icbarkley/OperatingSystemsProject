@@ -1,7 +1,5 @@
 package com.company;
 
-import javax.management.OperationsException;
-
 // will take a process from scheduler and change state and assign to cpu
 public class Dispatcher {
     Scheduler scheduler;
@@ -42,7 +40,7 @@ public class Dispatcher {
                 //move to run state and execute the process
                 changeStateToRun(process);
                 OperatingSystem.setIsExecutingAProcess(true);
-                this.cpu.setCurrentProcess(process);
+                this.cpu.setCurrent(process);
                 this.cpu.toExecute();
 
                 // move process to completed
@@ -64,7 +62,7 @@ public class Dispatcher {
             Utilities.print("In Dispatcher: process id: " + process.processControlBlock.getId() +
                     "- total time needed to finish: " + process.processControlBlock.getBurstTime());
             changeStateToRun(process);
-            this.cpu.setCurrentProcess(process);
+            this.cpu.setCurrent(process);
             this.cpu.toExecute();
             Utilities.printBreakLine();
             if (process.processControlBlock.getBurstTime() > 0) {
