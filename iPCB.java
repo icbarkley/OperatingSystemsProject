@@ -1,5 +1,5 @@
 package com.company;
 
-public interface iProcessControlBlock {
+public interface iPCB {
     public void printLog();
 }

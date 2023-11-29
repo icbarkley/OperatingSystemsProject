@@ -18,13 +18,13 @@ public class RoundRobin implements Runnable {
             OperatingSystem.setMethod("RR");
 
 //        create a process
-            ProcessControlBlock pcb3 = new ProcessControlBlock();
+            PCB pcb3 = new PCB();
             pcb3.setId(3);
 //            pcb3.setPriority(6);
             pcb3.setBurstTime(3);
             Process time3= new CalculateProcess(pcb3);
 
-            ProcessControlBlock pcb4 = new ProcessControlBlock();
+            PCB pcb4 = new PCB();
             pcb4.setId(4);
 //            pcb4.setPriority(1);
             pcb4.setBurstTime(2);

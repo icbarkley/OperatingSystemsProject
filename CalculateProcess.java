@@ -5,7 +5,7 @@ public class CalculateProcess extends Process {
     //    ProcessControlBlock processControlBlock;
     boolean isFinished;
 
-    public CalculateProcess(ProcessControlBlock processControlBlock) {
+    public CalculateProcess(PCB processControlBlock) {
         this.processControlBlock = processControlBlock;
         this.isFinished = false;
         Utilities.print("A new calculate process with id:" + this.processControlBlock.getId() + " is created.");

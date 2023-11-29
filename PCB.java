@@ -1,13 +1,13 @@
 package com.company;
 
-public class ProcessControlBlock implements iProcessControlBlock {
+public class PCB implements iPCB {
     private int id;
     private String state; // dispatcher manage this
     private int priority; // used in priority queue method
     private String ioInfo; //Demonstrated the potential to upgrade, Will not be used in this system
     private int burstTime; // used in round robin method
 
-    ProcessControlBlock() {
+    PCB() {
         this.id = 0;
         this.state = "";
         this.priority = 0;

@@ -36,12 +36,12 @@ public class Main {
             OperatingSystem.setMethod("RR");
 
 //        create a process
-            ProcessControlBlock pcb3 = new ProcessControlBlock();
+            PCB pcb3 = new PCB();
             pcb3.setId(3);
             pcb3.setBurstTime(2);
             Process time3= new CalculateProcess(pcb3);
 
-            ProcessControlBlock pcb4 = new ProcessControlBlock();
+            PCB pcb4 = new PCB();
             pcb4.setId(4);
             pcb4.setBurstTime(2);
             Process time4 = new CalculateProcess(pcb4);
@@ -62,12 +62,12 @@ public class Main {
             OperatingSystem.setMethod("PQ");
 
 //        create a process
-            ProcessControlBlock pcb1 = new ProcessControlBlock();
+            PCB pcb1 = new PCB();
             pcb1.setId(1);
             pcb1.setPriority(6);
             Process time = new CalculateProcess(pcb1);
 
-            ProcessControlBlock pcb2 = new ProcessControlBlock();
+            PCB pcb2 = new PCB();
             pcb2.setId(2);
             pcb2.setPriority(1);
             Process time2 = new CalculateProcess(pcb2);

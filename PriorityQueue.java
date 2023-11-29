@@ -16,13 +16,13 @@ public class PriorityQueue implements Runnable{
             OperatingSystem.setMethod("PQ");
 
 //        create a process
-            ProcessControlBlock pcb1 = new ProcessControlBlock();
+            PCB pcb1 = new PCB();
             pcb1.setId(1);
             pcb1.setPriority(6);
 //            pcb1.setBurstTime(5);
             Process time = new CalculateProcess(pcb1);
 
-            ProcessControlBlock pcb2 = new ProcessControlBlock();
+            PCB pcb2 = new PCB();
             pcb2.setId(2);
             pcb2.setPriority(1);
 //            pcb2.setBurstTime(3);
