@@ -1,10 +1,10 @@
 package com.company;
 
-public class IBThread implements Runnable {
+public class RRThread implements Runnable {
     Thread t;
 
-    public IBThread() {
-        Utilities.printHeadLine("In IB thread");
+    public RRThread() {
+        Utilities.printHeadLine("In RR thread");
         t = new Thread(this);
         t.start();
     }
@@ -15,7 +15,7 @@ public class IBThread implements Runnable {
         try{
             Utilities.printHeadLine("Start the OS");
             OperatingSystem os = new OperatingSystem();
-            OperatingSystem.setMethod("IB");
+            OperatingSystem.setMethod("RR");
 
 //        create a process
             ProcessControlBlock pcb3 = new ProcessControlBlock();
