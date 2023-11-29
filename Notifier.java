@@ -3,59 +3,63 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Notifier {
-    Timer timer;
-    int count = 0;
-    int limit = 0;
-    int currentCount = 0;
-    int currentLimit = 0;
-    boolean switched = false; //determine context switch condition
+    Timer systemTimer;
+    int numberCount = 0;
+    int setLimit = 0;
+    int realtimeCount = 0;
+    int realtimeLimit = 0;
+    boolean switched = false;
     public Notifier() {
-        timer = new Timer();
+        systemTimer = new Timer();
     }
 
-    // Execute the timer task with task = Remind Task
-    public void toExecute(int seconds) {
-        // If being switched back, resume current context
+
+    public void toExecute(int seconds)
+    {
         if (isSwitched()) {
-            count = currentCount;
-            limit = currentLimit;
+            numberCount = realtimeCount;
+            setLimit = realtimeLimit;
             switched = false;
             Utilities.print("Timer resume");
         } else {
-            count = 0;
-            limit = seconds;
+            numberCount = 0;
+            setLimit = seconds;
             Utilities.print("Timer execute");
         }
-        timer.schedule(new RemindTask(), 0, 1000); // schedule the task
+        systemTimer.schedule(new RemindTask(), 0, 1000);
 
     }
 
     public void toTerminate() {
-        timer.cancel();
+        systemTimer.cancel();
     }
 
-    // If process is switched out of running queue, save the current context
-    // and cancel the process
-    public void contextSwitch() {
+
+    public void contextSwitch()
+    {
         Utilities.print("This timer task is onhold and being switched");
-        currentCount = count;
-        currentLimit = limit;
-        count = 0;
-        limit = 0;
+        realtimeCount = numberCount;
+        realtimeLimit = setLimit;
+        numberCount = 0;
+        setLimit = 0;
         switched = true;
-        timer.cancel();
+        systemTimer.cancel();
     }
 
     public boolean isSwitched() {return switched;}
 
-    // Here to modify the task being looped
-    class RemindTask extends TimerTask {
-        public void run() {
+
+    class RemindTask extends TimerTask
+    {
+        public void run()
+        {
             Utilities.print("This timer task will be called every 1 second");
-            count++;
+            numberCount++;
             OperatingSystem.setIsExecutingAProcess(false);
-            if (count == limit) {
-                timer.cancel(); //Terminate the timer thread
+
+            if (numberCount == setLimit)
+            {
+                systemTimer.cancel();
 
             }
 
