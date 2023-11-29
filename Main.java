@@ -6,13 +6,12 @@ public class Main {
 
     public static void main(String[] args) {
 //         Uncomment and run to see the question
-//         question1();
-         question2();
+         question1();
+//         question2();
 
     }
 
     public static void question1() {
-        Utilities.print("Question 1: ");
         Scanner scanner = new Scanner(System.in);
         System.out.print("The stimulation of process will run with priority queue method if you press 1, " +
                 "it will run with round robin method if you press 2: ");
@@ -84,7 +83,6 @@ public class Main {
     }
 
     public static void question2() {
-        Utilities.print("Question 2: ");
         new PQThread();
         new RRThread();
     }
