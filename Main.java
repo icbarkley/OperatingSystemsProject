@@ -22,14 +22,14 @@ public class Main {
         }
 
         if (Integer.parseInt(choice) == 1) {
-            stimulationImplementedPriorityQueue();
+            simulatePriorityQueue();
         }
         else if (Integer.parseInt(choice) == 2) {
-            stimulationImplementedRoundRobin();
+            simulateRoundRobin();
         }
     }
 
-    public static void stimulationImplementedRoundRobin() {
+    public static void simulateRoundRobin() {
         try{
             Utilities.printHeadLine("Start the OS");
             OperatingSystem os = new OperatingSystem();
@@ -55,7 +55,7 @@ public class Main {
         }
     }
 
-    public static void stimulationImplementedPriorityQueue() {
+    public static void simulatePriorityQueue() {
         try{
             Utilities.printHeadLine("Start the OS");
             OperatingSystem os = new OperatingSystem();
