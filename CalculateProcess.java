@@ -18,8 +18,8 @@ public class CalculateProcess extends Process {
                     + " is being executed");
 
 
-            Utilities.print("The matrix derivation is " + generateRandNum());
-            Utilities.print("The matrix abacus is " + generateRandNum());
+            Utilities.print("The matrix derivation is " + randomNumber());
+            Utilities.print("The matrix abacus is " + randomNumber());
             this.toTerminate();
         }
 
@@ -28,8 +28,8 @@ public class CalculateProcess extends Process {
                     + " is being executed for " + Dispatcher.timeQuantum + " time quantum.");
             int newBurstTime = this.processControlBlock.getBurstTime() - 1;
             if  (newBurstTime <= 0) {
-                Utilities.print("The matrix derivation is " + generateRandNum());
-                Utilities.print("The matrix abacus is " + generateRandNum());
+                Utilities.print("The matrix derivation is " + randomNumber());
+                Utilities.print("The matrix abacus is " + randomNumber());
                 this.toTerminate();
             }
             this.processControlBlock.setBurstTime(newBurstTime);
@@ -38,7 +38,7 @@ public class CalculateProcess extends Process {
 
     @Override
     public void toTerminate() {
-        Utilities.print("Calcualte process id:" + this.processControlBlock.getId()
+        Utilities.print("Calculate process id:" + this.processControlBlock.getId()
                 + " is terminated");
         OperatingSystem.setIsExecutingAProcess(false);
     }
@@ -53,7 +53,7 @@ public class CalculateProcess extends Process {
 
     }
 
-    public int generateRandNum() {
+    public int randomNumber() {
         int max = 100;
         int min = 1;
         int range = max - min + 1;
