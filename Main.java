@@ -6,18 +6,18 @@ public class Main {
 
     public static void main(String[] args) {
 //         Uncomment and run to see the question
-//         scheduling();
-         multithreading();
+         scheduling();
+//         multithreading();
 
     }
 
     public static void scheduling() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("The stimulation of process will run with priority queue method if you press 1, " +
-                "it will run with round robin method if you press 2: ");
+        System.out.print("Priority queue: press 1, " +
+                "Round robin: press 2: ");
         String choice = scanner.nextLine();
          while (!choice.equals("1") && !choice.equals("2")) {
-             Utilities.printErr("Invalid input, please type (1 or 2): ");
+             Utilities.printErr("I said 1 OR 2!!!");
              choice = scanner.nextLine();
         }
 

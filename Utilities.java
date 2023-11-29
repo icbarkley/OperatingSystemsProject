@@ -5,7 +5,7 @@ public class Utilities {
         System.out.println(message);
     }
     static void printErr(String message)  {
-        System.out.println("Error happened: " + message);
+        System.out.println("WRONG " + message);
     }
     static void printHeadLine(String message)  {
         System.out.println("--------" + message + "--------");
