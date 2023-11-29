@@ -37,7 +37,7 @@ public class Notifier {
 
     public void contextSwitch()
     {
-        Utilities.print("This timer task is onhold and being switched");
+        Utilities.print("This timer task is on hold and being switched");
         realtimeCount = numberCount;
         realtimeLimit = setLimit;
         numberCount = 0;
