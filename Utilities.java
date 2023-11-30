@@ -8,13 +8,12 @@ public class Utilities {
         System.out.println("WRONG " + message);
     }
     static void printHeadLine(String message)  {
-        System.out.println("--------" + message + "--------");
+        System.out.println("---------" + message + "---------");
     }
     static void printSubLine(String message)  {
-        System.out.println("---" + message);
+        System.out.println("---" + message + "---");
     }
-    static void printBreakLine()  {
-        System.out.println("------------------------");
+    static void printBreakLine()  {System.out.println("--------------------------------------------------------------");
     }
     static boolean isValid(Process process) {return process.pcb.getId() > 0;}
 
