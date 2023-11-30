@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Queue;
 import java.util.LinkedList;
 
-public class ProcessWareHouse<V> {
+public class ProcessStorage<V> {
     Queue<Process> jobQueue;
     // use readyQue in roundrobin
     Queue<Process> readyQueue;
@@ -20,7 +20,7 @@ public class ProcessWareHouse<V> {
     // OS
     OS osController;
 
-    public ProcessWareHouse(OS os) {
+    public ProcessStorage(OS os) {
         this.jobQueue = new LinkedList<>();
         this.readyQueue = new LinkedList<>();
         this.waitQueue = new LinkedList<>();

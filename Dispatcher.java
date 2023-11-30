@@ -1,11 +1,9 @@
 package com.company;
 
-import javax.management.OperationsException;
-
 // will take a process from scheduler and change state and assign to cpu
 public class Dispatcher {
     Scheduler scheduler;
-    ProcessWareHouse processWareHouse;
+    ProcessStorage processStorage;
     CPU cpu;
     String method;
     OS osController;
@@ -34,7 +32,7 @@ public class Dispatcher {
         try {
             if (!OS.isExecutingAProcess()) {
                 Process process = this.getProcessFromScheduler();
-                this.processWareHouse.removeProcessFromReadyQueueInLinkedListById(process.processControlBlock.getId());
+                this.processStorage.removeProcessFromReadyQueueInLinkedListById(process.processControlBlock.getId());
                 //move this to ready state
                 Utilities.print("In Dispatcher: process id: " + process.processControlBlock.getId() +
                         "- priority: " + process.processControlBlock.getPriority());
@@ -49,7 +47,7 @@ public class Dispatcher {
                 if (!OS.isExecutingAProcess())
                     changeStateToCompleted(process);
 
-                if (processWareHouse.isQueueEmpty(processWareHouse.readyQueue)) {
+                if (processStorage.isQueueEmpty(processStorage.readyQueue)) {
                     osController.setAllWorksAreDone(true);
                 }
             }
@@ -69,12 +67,12 @@ public class Dispatcher {
             Utilities.printBreakLine();
             if (process.processControlBlock.getBurstTime() > 0) {
                 osController.changeProcessStateToReady(process);
-                this.processWareHouse.moveCurrentProcessToTheEndOfReadyQueue(process);
+                this.processStorage.moveCurrentProcessToTheEndOfReadyQueue(process);
             } else {
                 changeStateToCompleted(process);
             }
 
-            if (processWareHouse.isQueueEmpty(processWareHouse.readyQueue)) {
+            if (processStorage.isQueueEmpty(processStorage.readyQueue)) {
                 osController.setAllWorksAreDone(true);
             }
     }
@@ -90,9 +88,9 @@ public class Dispatcher {
         }
     }
 
-    public void connectToProcessWareHouse(ProcessWareHouse processWareHouse) {
+    public void connectToProcessWareHouse(ProcessStorage processWareHouse) {
         try {
-            this.processWareHouse = processWareHouse;
+            this.processStorage = processWareHouse;
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
         }

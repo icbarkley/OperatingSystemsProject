@@ -6,13 +6,13 @@ public class Main {
 
     public static void main(String[] args) {
 //         Uncomment and run to see the question
-         scheduling();
-//         multithreading();
+  //       scheduling();
+         multithreading();
 
     }
 
     public static void scheduling() {
-        Scanner scanner = new Scanner(System.in);1
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Priority queue: press 1, Round robin: press 2: ");
         String choice = scanner.nextLine();
          while (!choice.equals("1") && !choice.equals("2")) {

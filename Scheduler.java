@@ -5,7 +5,7 @@ import java.util.*;
 public class Scheduler {
     Queue<Integer> priorityQueue;
     Map<Integer, Integer> idAndBurstTimeMap;
-    ProcessWareHouse processWareHouse;
+    ProcessStorage processStorage;
     Dispatcher dispatcher;
     OS osController;
 
@@ -17,9 +17,9 @@ public class Scheduler {
 
 
     // main function
-    public void connectToProcessWareHouse(ProcessWareHouse processWareHouse) {
+    public void connectToProcessStorage(ProcessStorage processStorage) {
         try {
-            this.processWareHouse = processWareHouse;
+            this.processStorage = processStorage;
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
         }
@@ -38,8 +38,8 @@ public class Scheduler {
         if (OS.isPriorityQueueMethod()) {
 //            HashMap (key:id - value:priority) to keep history of all the processes that had been added either ready or terminated
 //            From HashMap create the priority queue of Ids based on the process priority
-            createIdAndBurstTimeMap();
-            createPriorityQueueFromMap();
+            createidAndBurstTimeMap();
+            createPriorityQueue();
         }
 
         if (OS.isRoundRobinMethod()) {
@@ -56,37 +56,37 @@ public class Scheduler {
 //        if RR, just pull the most current process, execute a while and put it back
 
         if (OS.isPriorityQueueMethod()) {
-            com.company.Process process = getProcessIfPriorityQueueMethod();
+            com.company.Process process = getPriorityQueueProcess();
             Utilities.printSubLine("In scheduler: The retrieved process id: " + process.processControlBlock.getId());
             return process;
         }
 
         if (OS.isRoundRobinMethod()) {
-            Process process = getProcessIfRoundRobinMethod();
+            Process process = getRoundRobinProcess();
             Utilities.printSubLine("In scheduler: The retrieved process id: " + process.processControlBlock.getId());
             return process;
         }
         return null;
     }
 
-    public Process getProcessIfPriorityQueueMethod() {
+    public Process getPriorityQueueProcess() {
         if (priorityQueue.size() > 0) {
             int id = priorityQueue.remove();
-            return this.processWareHouse.searchProcessById(id);
+            return this.processStorage.searchProcessById(id);
         } else {
             Utilities.print("Priority Queue is empty");
             return null;
         }
     }
 
-    public Process getProcessIfRoundRobinMethod() {
+    public Process getRoundRobinProcess() {
         Process process = null;
         try {
-            if (this.processWareHouse.isQueueEmpty(this.processWareHouse.readyQueue)) {
+            if (this.processStorage.isQueueEmpty(this.processStorage.readyQueue)) {
                 Utilities.print("The ready queue is empty");
                 return null;
             }
-            process = this.processWareHouse.getMostCurrentProcessFromReadyQueue();
+            process = this.processStorage.getMostCurrentProcessFromReadyQueue();
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
         }
@@ -96,17 +96,17 @@ public class Scheduler {
 
 //  Priority scheduling algorithm related functions
 //  create the hashmap to later on feed to priority queue
-    public void createIdAndBurstTimeMap() {
-        Collection readyQueue = this.processWareHouse.getReadyQueue();
+    public void createidAndBurstTimeMap() {
+        Collection readyQueue = this.processStorage.getReadyQueue();
         for (Object process : readyQueue) {
-            addProcessToMap((Process) process);
+            addProcess((Process) process);
         }
         Utilities.printSubLine("In Scheduler: Create HashMap for PQ");
         printHashMap();
     }
 
 
-    public boolean addProcessToMap(Process process) {
+    public boolean addProcess(Process process) {
         try {
             // Very crucial condition check to separate the 2 thread
             // If specify same properties, one thread can know and change data of another thread
@@ -125,7 +125,7 @@ public class Scheduler {
     }
 
 
-    public void createPriorityQueueFromMap() {
+    public void createPriorityQueue() {
         LinkedHashMap<Integer, Integer> sortedMap = new LinkedHashMap<>();
 
         idAndBurstTimeMap.entrySet()
