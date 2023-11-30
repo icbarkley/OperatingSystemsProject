@@ -2,7 +2,8 @@ package com.company;
 
 import java.util.*;
 
-public class Scheduler {
+public class Scheduler
+{
     Queue<Integer> priorityQueue;
     Map<Integer, Integer> idAndBurstTimeMap;
     systemProcessStorage systemProcessStorage;

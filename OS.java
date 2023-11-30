@@ -8,15 +8,15 @@ public class OS {
     systemDispatcher systemDispatcher;
     CPU cpu;
 
-    public boolean isAllWorksAreDone() {
-        return allWorksAreDone;
+    public boolean isSystemFinished() {
+        return systemFinished;
     }
 
-    public void setAllWorksAreDone(boolean allWorksAreDone) {
-        this.allWorksAreDone = allWorksAreDone;
+    public void setSystemFinished(boolean systemFinished) {
+        this.systemFinished = systemFinished;
     }
 
-    public boolean allWorksAreDone;
+    public boolean systemFinished;
     public static String method ;
 
     public static boolean isExecutingAProcess() {
@@ -62,108 +62,135 @@ public class OS {
     }
 
     public void allWorksAreDone() {
-        allWorksAreDone = true;
+        systemFinished = true;
     }
 
     // main functionality
     public void start() {
         //connect every instances together
-        Utilities.printHeadLine("PWH: ");
-        Utilities.printSubLine("Connect PWH with dispatcher");
+        System.out.println("||PWH: ||");
+        System.out.println("{Connect PWH with dispatcher}");
         this.pool.dispatcherConnection(this.systemDispatcher);
 
-        Utilities.printHeadLine("Scheduler: ");
-        Utilities.printSubLine("Connect scheduler with PWH");
+        System.out.println("||Scheduler: ||");
+        System.out.println("{Connect scheduler with PWH}");
         this.scheduler.connectToProcessStorage(this.pool);
-        Utilities.printSubLine("Connect scheduler with dispatcher");
+        System.out.println("{Connect scheduler with dispatcher}");
         this.scheduler.connectToDispatcher(this.systemDispatcher);
 
         // scheduler will pick a process, based on the method
-        Utilities.printHeadLine("start scheduler");
+        System.out.println("||Start Scheduler||");
         this.scheduler.start();
-        Utilities.print("print queue");
+        System.out.println("print queue");
         this.scheduler.printPriorityQueue();
 
-        Utilities.printHeadLine("Dispatcher: ");
-        Utilities.printSubLine("Connect dispatcher with scheduler");
-        this.systemDispatcher.connectToScheduler(this.scheduler);
-        Utilities.printSubLine("Connect dispatcher with PWH");
-        this.systemDispatcher.connectToProcessWareHouse(this.pool);
+        System.out.println("||Dispatcher: ||");
+        System.out.println("{Connect dispatcher with scheduler}");
+        this.systemDispatcher.schedulerConnection(this.scheduler);
+        System.out.println("{Connect dispatcher with PWH}");
+        this.systemDispatcher.processWarehouseConnection(this.pool);
 
         Collection readyQueue = this.pool.getReadyQueue();
 
-        while (!readyQueue.isEmpty()) {
+        while (!readyQueue.isEmpty())
+        {
             this.systemDispatcher.start();
         }
-        if (allWorksAreDone) Utilities.printHeadLine("All work are done");
-        else Utilities.printHeadLine("Not done");
+        if (systemFinished)
+            System.out.println("||All tasks are complete||");
+        else
+            System.out.println("||Still working...||");
     }
 
     // new process will be added to job pool then move to ready queue
-    public void addProcess(Process process) {
-        try {
-            Utilities.printHeadLine("A new process is created in the OS");
-            //Os talk to the process ware house
+    public void addProcess(Process process)
+    {
+        try
+        {
+            System.out.println("||New process has been created in the Operating System||");
+
             this.systemDispatcher.changeStateToNew(process);
-            if (isPriorityQueueMethod()) {
+
+            if (isPriorityQueueMethod())
+            {
                 this.pool.addProcessToJobQueue(process);
                 this.pool.removeMostCurrentProcessFromJobQueue();
                 this.pool.addProcessToReadyQueue(process);
             }
 
-            if (isRoundRobinMethod()) {
+            if (isRoundRobinMethod())
+            {
                 this.pool.addProcessToJobQueue(process);
                 this.pool.removeMostCurrentProcessFromJobQueue();
                 this.pool.addProcessToReadyQueue(process);
             }
-        }catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Utilities.errorMsg(e.getMessage());
         }
     }
-    // end of main functionalities
-
-    // Utilities
-    static boolean isPriorityQueueMethod() {return  OS.method.equals("PQ");}
-
-    static boolean isRoundRobinMethod() {return  OS.method.equals("RR");}
-
-    static String getMethod() {return OS.method;}
 
 
-    public systemProcessStorage getPool() {
+
+    static boolean isPriorityQueueMethod()
+    {
+        return  OS.method.equals("PQ");
+    }
+
+    static boolean isRoundRobinMethod()
+    {
+        return  OS.method.equals("RR");
+    }
+
+    static String retrieveMethod()
+    {
+        return OS.method;
+    }
+
+
+    public systemProcessStorage retrievePool()
+    {
         return pool;
     }
 
-    public void setPool(systemProcessStorage pool) {
+    public void setPool(systemProcessStorage pool)
+    {
         this.pool = pool;
     }
 
-    public Scheduler getScheduler() {
+    public Scheduler retrieveScheduler()
+    {
         return scheduler;
     }
 
-    public void setScheduler(Scheduler scheduler) {
+    public void setScheduler(Scheduler scheduler)
+    {
         this.scheduler = scheduler;
     }
 
-    public systemDispatcher getDispatcher() {
+    public systemDispatcher retrieveDispatcher()
+    {
         return systemDispatcher;
     }
 
-    public void setDispatcher(systemDispatcher systemDispatcher) {
+    public void setDispatcher(systemDispatcher systemDispatcher)
+    {
         this.systemDispatcher = systemDispatcher;
     }
 
-    public CPU getCpu() {
+    public CPU retrieveCPU()
+    {
         return cpu;
     }
 
-    public void setCpu(CPU cpu) {
+    public void setCpu(CPU cpu)
+    {
         this.cpu = cpu;
     }
 
-    //Actions
-    public void changeProcessStateToReady(Process process) {
-        this.systemDispatcher.changeStateToReady(process);
+    public void changeProcessStateToReady(Process process)
+    {
+        this.systemDispatcher.stateAlterToReady(process);
     }
 }

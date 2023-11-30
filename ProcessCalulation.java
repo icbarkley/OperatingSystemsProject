@@ -1,35 +1,38 @@
 package com.company;
 import java.lang.Math;
 
-public class ProcessCalulation extends Process {
+public class ProcessCalulation extends Process
+{
     //    ProcessControlBlock processControlBlock;
     boolean isFinished;
 
-    public ProcessCalulation(PCB processControlBlock) {
+    public ProcessCalulation(PCB processControlBlock)
+    {
         this.pcb = processControlBlock;
         this.isFinished = false;
-        Utilities.print("A new calculate process with id:" + this.pcb.returnId() + " is created.");
+        System.out.println("A new calculation process has been created. (ID:" + this.pcb.returnId());
     }
 
     @Override
-    public void toExecute() {
-        if (OS.isPriorityQueueMethod()) {
-            Utilities.print("Process id:" + this.pcb.returnId()
-                    + " is being executed");
-
-
-            Utilities.print("The matrix derivation is " + randomNumber());
-            Utilities.print("The matrix abacus is " + randomNumber());
+    public void toExecute()
+    {
+        if (OS.isPriorityQueueMethod())
+        {
+            System.out.println("Process is now being executed (ID:" + this.pcb.returnId());
+            System.out.println("Matrix derivation: " + randomNumGen());
+            System.out.println("Matrix abacus: " + randomNumGen());
             this.toTerminate();
         }
 
-        if (OS.isRoundRobinMethod()) {
-            Utilities.print("Process id:" + this.pcb.returnId()
-                    + " is being executed for " + systemDispatcher.timeQuantum + " time quantum.");
+        if (OS.isRoundRobinMethod())
+        {
+            System.out.println("Process (ID: " + this.pcb.returnId() + ") is currently executed for " + systemDispatcher.timeQuantum + " time quantum.");
+
             int newBurstTime = this.pcb.getBurstTime() - 1;
-            if  (newBurstTime <= 0) {
-                Utilities.print("The matrix derivation is " + randomNumber());
-                Utilities.print("The matrix abacus is " + randomNumber());
+            if  (newBurstTime <= 0)
+            {
+                System.out.println("Matrix derivation: " + randomNumGen());
+                System.out.println("Matrix abacus: " + randomNumGen());
                 this.toTerminate();
             }
             this.pcb.setBurstTime(newBurstTime);
@@ -37,23 +40,26 @@ public class ProcessCalulation extends Process {
     }
 
     @Override
-    public void toTerminate() {
-        Utilities.print("Process id:" + this.pcb.returnId()
-                + " is terminated");
+    public void toTerminate()
+    {
+        System.out.println("Process id:" + this.pcb.returnId() + " is terminated");
         OS.setIsExecutingAProcess(false);
     }
 
     @Override
-    public void toWait() {
+    public void toWait()
+    {
 
     }
 
     @Override
-    public void toBlocked() {
+    public void toBlocked()
+    {
 
     }
 
-    public int randomNumber() {
+    public int randomNumGen()
+    {
         int max = 100;
         int min = 1;
         int range = max - min + 1;
