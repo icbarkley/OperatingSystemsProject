@@ -19,12 +19,12 @@ public class systemDispatcher {
 
     public void start()
     {
-        if (OS.isPriorityQueueMethod())
+        if (OS.isPriorityQueue())
         {
             startWithPriorityQueueMethod();
         }
 
-        if (OS.isRoundRobinMethod())
+        if (OS.isRoundRobin())
         {
             startWithRoundRobinMethod();
         }
@@ -34,18 +34,18 @@ public class systemDispatcher {
     {
         try
         {
-            if (!OS.isExecutingAProcess())
+            if (!OS.isExecuting())
             {
                 Process process = this.retrieveProcessFromScheduler();
                 this.systemProcessStorage.removeProcessFromReadyQueueInLinkedListById(process.processControlBlock.retrieveId());
                 System.out.println("|Dispatcher| Process ID: " + process.processControlBlock.retrieveId() + " Priority: " + process.processControlBlock.retrievePriority());
 
                 stateAlterToRun(process);
-                OS.setIsExecutingAProcess(true);
+                OS.setIsExecuting(true);
                 this.systemCPU.setCurrent(process);
                 this.systemCPU.toExecute();
 
-                if (!OS.isExecutingAProcess())
+                if (!OS.isExecuting())
                     setStateAsCompleted(process);
 
                 if (systemProcessStorage.queueContainsNothing(systemProcessStorage.readyQueue))
@@ -71,7 +71,7 @@ public class systemDispatcher {
             Utilities.printBreakLine();
             if (process.processControlBlock.retrieveBurstTime() > 0)
             {
-                osController.changeProcessStateToReady(process);
+                osController.changeStateToReady(process);
                 this.systemProcessStorage.moveCurrentProcessToEndOfReadyQueue(process);
             }
             else

@@ -16,7 +16,7 @@ public class ProcessCalulation extends Process
     @Override
     public void toExecute()
     {
-        if (OS.isPriorityQueueMethod())
+        if (OS.isPriorityQueue())
         {
             System.out.println("Process is now being executed (ID:" + this.processControlBlock.retrieveId());
             System.out.println("Matrix derivation: " + randomNumGen());
@@ -24,7 +24,7 @@ public class ProcessCalulation extends Process
             this.toTerminate();
         }
 
-        if (OS.isRoundRobinMethod())
+        if (OS.isRoundRobin())
         {
             System.out.println("Process (ID: " + this.processControlBlock.retrieveId() + ") is currently executed for " + systemDispatcher.timeQuantum + " time quantum.");
 
@@ -43,7 +43,7 @@ public class ProcessCalulation extends Process
     public void toTerminate()
     {
         System.out.println("Process (ID:" + this.processControlBlock.retrieveId() + ") has been terminated");
-        OS.setIsExecutingAProcess(false);
+        OS.setIsExecuting(false);
     }
 
     @Override

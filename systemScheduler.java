@@ -43,7 +43,7 @@ public class systemScheduler
 
     public void start()
     {
-        if (OS.isPriorityQueueMethod())
+        if (OS.isPriorityQueue())
         {
 //            HashMap (key:id - value:priority) to keep history of all the processes that had been added either ready or terminated
 //            From HashMap create the priority queue of Ids based on the process priority
@@ -51,7 +51,7 @@ public class systemScheduler
             createPriorityQueue();
         }
 
-        if (OS.isRoundRobinMethod())
+        if (OS.isRoundRobin())
         {
 //             No need to create additional data structure since the process is poll off from ready Queue
 //            from ProcessWareHouse
@@ -66,14 +66,14 @@ public class systemScheduler
 //        depend on the method, if PQ then pull the id out of PQ, search for that process, execute that process and erase that process
 //        if RR, just pull the most current process, execute a while and put it back
 
-        if (OS.isPriorityQueueMethod())
+        if (OS.isPriorityQueue())
         {
             com.company.Process process = getPriorityQueueProcess();
             System.out.println("{Scheduler: Retrieved Process ID: " + process.processControlBlock.retrieveId() + "}");
             return process;
         }
 
-        if (OS.isRoundRobinMethod())
+        if (OS.isRoundRobin())
         {
             Process process = getRoundRobinProcess();
             System.out.println("{Scheduler: Retrieved Process ID: " + process.processControlBlock.retrieveId() + "}");

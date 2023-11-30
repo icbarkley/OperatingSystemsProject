@@ -1,10 +1,10 @@
 package com.company;
 
-public class RoundRobin implements Runnable
+public class systemRoundRobin implements Runnable
 {
     Thread sysThread;
 
-    public RoundRobin()
+    public systemRoundRobin()
     {
         System.out.println("||In RR thread||");
         sysThread = new Thread(this);

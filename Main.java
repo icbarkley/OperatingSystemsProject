@@ -98,6 +98,6 @@ public class Main {
     public static void multithreading()
     {
         new systemPriorityQueue();
-        new RoundRobin();
+        new systemRoundRobin();
     }
 }

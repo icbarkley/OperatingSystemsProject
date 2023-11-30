@@ -5,7 +5,7 @@ public class systemPriorityQueue implements Runnable
     Thread pqThread;
     public systemPriorityQueue()
     {
-        System.out.println("|In Priority Queue Thread|");
+        System.out.println("||In Priority Queue Thread||");
         pqThread = new Thread(this);
         pqThread.start();
     }

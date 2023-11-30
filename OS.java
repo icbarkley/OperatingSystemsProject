@@ -22,29 +22,29 @@ public class OS
     public boolean systemFinished;
     public static String method ;
 
-    public static boolean isExecutingAProcess()
+    public static boolean isExecuting()
     {
-        return isExecutingAProcess;
+        return isExecuting;
     }
 
-    public static void setIsExecutingAProcess(boolean isExecutingAProcess)
+    public static void setIsExecuting(boolean isExecuting)
     {
-        OS.isExecutingAProcess = isExecutingAProcess;
+        OS.isExecuting = isExecuting;
     }
 
-    public static boolean isExecutingAProcess;
+    public static boolean isExecuting;
 
-    public static int getIdCurrentExecutingProcess()
+    public static int getProcessID()
     {
-        return idCurrentExecutingProcess;
+        return processID;
     }
 
-    public static void setIdCurrentExecutingProcess(int idCurrentExecutingProcess)
+    public static void setProcessID(int processID)
     {
-        OS.idCurrentExecutingProcess = idCurrentExecutingProcess;
+        OS.processID = processID;
     }
 
-    public static int idCurrentExecutingProcess;
+    public static int processID;
 
     public static void setMethod(String method)
     {
@@ -69,11 +69,13 @@ public class OS
 
     public OS getOSController()
     {
+
         return this;
     }
 
-    public void allWorksAreDone()
+    public void workDone()
     {
+
         systemFinished = true;
     }
 
@@ -124,14 +126,14 @@ public class OS
 
             this.systemDispatcher.changeStateToNew(process);
 
-            if (isPriorityQueueMethod())
+            if (isPriorityQueue())
             {
                 this.pool.addProcessToJobQueue(process);
                 this.pool.removeMostCurrentProcessFromJobQueue();
                 this.pool.addProcessToReadyQueue(process);
             }
 
-            if (isRoundRobinMethod())
+            if (isRoundRobin())
             {
                 this.pool.addProcessToJobQueue(process);
                 this.pool.removeMostCurrentProcessFromJobQueue();
@@ -146,12 +148,13 @@ public class OS
 
 
 
-    static boolean isPriorityQueueMethod()
+    static boolean isPriorityQueue()
     {
+
         return  OS.method.equals("PQ");
     }
 
-    static boolean isRoundRobinMethod()
+    static boolean isRoundRobin()
     {
         return  OS.method.equals("RR");
     }
@@ -203,7 +206,7 @@ public class OS
         this.cpu = cpu;
     }
 
-    public void changeProcessStateToReady(Process process)
+    public void changeStateToReady(Process process)
     {
         this.systemDispatcher.stateAlterToReady(process);
     }

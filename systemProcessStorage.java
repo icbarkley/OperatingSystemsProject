@@ -29,11 +29,11 @@ public class systemProcessStorage<V>
 
     public Collection<Process> getReadyQueue()
     {
-        if (OS.isPriorityQueueMethod())
+        if (OS.isPriorityQueue())
         {
             return getReadyQueuePQ();
         }
-        if (OS.isRoundRobinMethod())
+        if (OS.isRoundRobin())
         {
             return getReadyQueueRR();
         }
@@ -134,13 +134,13 @@ public class systemProcessStorage<V>
         try
         {
             System.out.println("|Process Warehouse| Adding the most recent process to the ready queue");
-            osController.changeProcessStateToReady(process);
-            if (OS.isPriorityQueueMethod())
+            osController.changeStateToReady(process);
+            if (OS.isPriorityQueue())
             {
                 this.addProcessToReadyQueueInLinkedList(process);
             }
 
-            else if (OS.isRoundRobinMethod())
+            else if (OS.isRoundRobin())
             {
                 System.out.println("|Process Warehouse| Adding the most recent process to the ready queue in Round Robin");
                 this.moveCurrentProcessToEndOfReadyQueue(process);
@@ -155,7 +155,7 @@ public class systemProcessStorage<V>
 
     public Process retrieveMostRecentProcessInReadyQueue()
     {
-        if (OS.isRoundRobinMethod())
+        if (OS.isRoundRobin())
         {
             if (!queueContainsNothing(readyQueue))
             {

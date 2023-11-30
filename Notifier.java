@@ -61,7 +61,7 @@ public class Notifier
         {
             System.out.println("Timer task will be called every second");
             numberCount++;
-            OS.setIsExecutingAProcess(false);
+            OS.setIsExecuting(false);
 
             if (numberCount == setLimit)
             {
