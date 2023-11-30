@@ -3,7 +3,7 @@ package com.company;
 // will take a process from scheduler and change state and assign to cpu
 public class systemDispatcher {
     Scheduler taskScheduler;
-    ProcessStorage processStorage;
+    systemProcessStorage systemProcessStorage;
     CPU systemCPU;
     String method;
     OS osController;
@@ -38,7 +38,7 @@ public class systemDispatcher {
             if (!OS.isExecutingAProcess())
             {
                 Process process = this.getProcessFromScheduler();
-                this.processStorage.removeProcessFromReadyQueueInLinkedListById(process.pcb.getId());
+                this.systemProcessStorage.removeProcessFromReadyQueueInLinkedListById(process.pcb.getId());
                 Utilities.print("In Dispatcher: process id: " + process.pcb.getId() + "- priority: " + process.pcb.getPriority());
 
                 changeStateToRun(process);
@@ -49,7 +49,7 @@ public class systemDispatcher {
                 if (!OS.isExecutingAProcess())
                     changeStateToCompleted(process);
 
-                if (processStorage.isQueueEmpty(processStorage.readyQueue))
+                if (systemProcessStorage.queueContainsNothing(systemProcessStorage.readyQueue))
                 {
                     osController.setAllWorksAreDone(true);
                 }
@@ -73,14 +73,14 @@ public class systemDispatcher {
             if (process.pcb.getBurstTime() > 0)
             {
                 osController.changeProcessStateToReady(process);
-                this.processStorage.moveCurrentProcessToTheEndOfReadyQueue(process);
+                this.systemProcessStorage.moveCurrentProcessToTheEndOfReadyQueue(process);
             }
             else
             {
                 changeStateToCompleted(process);
             }
 
-            if (processStorage.isQueueEmpty(processStorage.readyQueue))
+            if (systemProcessStorage.queueContainsNothing(systemProcessStorage.readyQueue))
             {
                 osController.setAllWorksAreDone(true);
             }
@@ -96,11 +96,11 @@ public class systemDispatcher {
         }
     }
 
-    public void connectToProcessWareHouse(ProcessStorage processWareHouse)
+    public void connectToProcessWareHouse(systemProcessStorage processWareHouse)
     {
         try
         {
-            this.processStorage = processWareHouse;
+            this.systemProcessStorage = processWareHouse;
         } catch (Exception e)
         {
             Utilities.errorMsg(e.getMessage());

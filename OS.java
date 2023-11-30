@@ -3,7 +3,7 @@ package com.company;
 import java.util.Collection;
 
 public class OS {
-    ProcessStorage pool;
+    systemProcessStorage pool;
     Scheduler scheduler;
     systemDispatcher systemDispatcher;
     CPU cpu;
@@ -44,13 +44,13 @@ public class OS {
     }
 
     public OS() {
-        this.pool = new ProcessStorage(this);
+        this.pool = new systemProcessStorage(this);
         this.scheduler = new Scheduler(this);
         this.systemDispatcher = new systemDispatcher(this);
         this.cpu = new CPU();
     }
 
-    public OS(ProcessStorage pool, Scheduler scheduler, systemDispatcher systemDispatcher, CPU cpu) {
+    public OS(systemProcessStorage pool, Scheduler scheduler, systemDispatcher systemDispatcher, CPU cpu) {
         this.pool = pool;
         this.scheduler = scheduler;
         this.systemDispatcher = systemDispatcher;
@@ -70,7 +70,7 @@ public class OS {
         //connect every instances together
         Utilities.printHeadLine("PWH: ");
         Utilities.printSubLine("Connect PWH with dispatcher");
-        this.pool.connectToDispatcher(this.systemDispatcher);
+        this.pool.dispatcherConnection(this.systemDispatcher);
 
         Utilities.printHeadLine("Scheduler: ");
         Utilities.printSubLine("Connect scheduler with PWH");
@@ -130,11 +130,11 @@ public class OS {
     static String getMethod() {return OS.method;}
 
 
-    public ProcessStorage getPool() {
+    public systemProcessStorage getPool() {
         return pool;
     }
 
-    public void setPool(ProcessStorage pool) {
+    public void setPool(systemProcessStorage pool) {
         this.pool = pool;
     }
 

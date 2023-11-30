@@ -13,7 +13,7 @@ public class Main {
 
     public static void scheduling() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Priority queue: press 1, Round robin: press 2: ");
+        System.out.print("1: Round Robin | 2: Priority Queue: ");
         String choice = scanner.nextLine();
          while (!choice.equals("1") && !choice.equals("2")) {
              Utilities.errorMsg("I said 1 OR 2!!!");
@@ -21,10 +21,10 @@ public class Main {
         }
 
         if (Integer.parseInt(choice) == 1) {
-            simulatePriorityQueue();
+            simulateRoundRobin();
         }
         else if (Integer.parseInt(choice) == 2) {
-            simulateRoundRobin();
+            simulatePriorityQueue();
         }
     }
 

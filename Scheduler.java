@@ -5,7 +5,7 @@ import java.util.*;
 public class Scheduler {
     Queue<Integer> priorityQueue;
     Map<Integer, Integer> idAndBurstTimeMap;
-    ProcessStorage processStorage;
+    systemProcessStorage systemProcessStorage;
     systemDispatcher systemDispatcher;
     OS osController;
 
@@ -17,9 +17,9 @@ public class Scheduler {
 
 
     // main function
-    public void connectToProcessStorage(ProcessStorage processStorage) {
+    public void connectToProcessStorage(systemProcessStorage systemProcessStorage) {
         try {
-            this.processStorage = processStorage;
+            this.systemProcessStorage = systemProcessStorage;
         } catch (Exception e) {
             Utilities.errorMsg(e.getMessage());
         }
@@ -72,7 +72,7 @@ public class Scheduler {
     public Process getPriorityQueueProcess() {
         if (priorityQueue.size() > 0) {
             int id = priorityQueue.remove();
-            return this.processStorage.searchProcessById(id);
+            return this.systemProcessStorage.searchProcessById(id);
         } else {
             Utilities.print("Priority Queue is empty");
             return null;
@@ -82,11 +82,11 @@ public class Scheduler {
     public Process getRoundRobinProcess() {
         Process process = null;
         try {
-            if (this.processStorage.isQueueEmpty(this.processStorage.readyQueue)) {
+            if (this.systemProcessStorage.queueContainsNothing(this.systemProcessStorage.readyQueue)) {
                 Utilities.print("The ready queue is empty");
                 return null;
             }
-            process = this.processStorage.getMostCurrentProcessFromReadyQueue();
+            process = this.systemProcessStorage.getMostCurrentProcessFromReadyQueue();
         } catch (Exception e) {
             Utilities.errorMsg(e.getMessage());
         }
@@ -97,7 +97,7 @@ public class Scheduler {
 //  Priority scheduling algorithm related functions
 //  create the hashmap to later on feed to priority queue
     public void createidAndBurstTimeMap() {
-        Collection readyQueue = this.processStorage.getReadyQueue();
+        Collection readyQueue = this.systemProcessStorage.getReadyQueue();
         for (Object process : readyQueue) {
             addProcess((Process) process);
         }
