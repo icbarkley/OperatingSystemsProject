@@ -52,8 +52,9 @@ public class Notifier
         systemTimer.cancel();
     }
 
-    public boolean isSwitched() {return switched;}
-
+    public boolean isSwitched() {
+        return switched;
+    }
 
     class RemindTask extends TimerTask
     {

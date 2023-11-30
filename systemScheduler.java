@@ -6,7 +6,7 @@ public class systemScheduler
 {
     Queue<Integer> priorityQueue;
     Map<Integer, Integer> idAndBurstTimeMap;
-    systemProcessStorage systemProcessStorage;
+    systemStorage systemProcessStorage;
     systemDispatcher systemDispatcher;
     OS osController;
 
@@ -17,7 +17,7 @@ public class systemScheduler
         this.osController = osController;
     }
 
-    public void connectToProcessStorage(systemProcessStorage systemProcessStorage)
+    public void connectToProcessStorage(systemStorage systemProcessStorage)
     {
         try
         {
@@ -69,14 +69,14 @@ public class systemScheduler
         if (OS.isPriorityQueue())
         {
             com.company.Process process = getPriorityQueueProcess();
-            System.out.println("{Scheduler: Retrieved Process ID: " + process.processControlBlock.retrieveId() + "}");
+            System.out.println("{Scheduler: Retrieved Process ID: " + process.pcb.retrieveId() + "}");
             return process;
         }
 
         if (OS.isRoundRobin())
         {
             Process process = getRoundRobinProcess();
-            System.out.println("{Scheduler: Retrieved Process ID: " + process.processControlBlock.retrieveId() + "}");
+            System.out.println("{Scheduler: Retrieved Process ID: " + process.pcb.retrieveId() + "}");
             return process;
         }
         return null;
@@ -137,10 +137,10 @@ public class systemScheduler
         {
             // Very crucial condition check to separate the 2 thread
             // If specify same properties, one thread can know and change data of another thread
-            if (process.processControlBlock.retrieveId() > 0 || process.processControlBlock.retrievePriority() != 0)
+            if (process.pcb.retrieveId() > 0 || process.pcb.retrievePriority() != 0)
             {
-                idAndBurstTimeMap.put(process.processControlBlock.retrieveId(),
-                        process.processControlBlock.retrievePriority());
+                idAndBurstTimeMap.put(process.pcb.retrieveId(),
+                        process.pcb.retrievePriority());
                 return true;
             }
             else

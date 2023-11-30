@@ -5,23 +5,23 @@ import java.util.Iterator;
 import java.util.Queue;
 import java.util.LinkedList;
 
-public class systemProcessStorage<V>
+public class systemStorage<V>
 {
     Queue<Process> jobQueue;
     Queue<Process> readyQueue;
-    LinkedList<Process> readyQueueInLinkedList;
+    LinkedList<Process> readyLinkedListQueue;
     Queue<Process> waitQueue;
     Queue<Process> blockQueue;
     systemDispatcher systemDispatcher;
     OS osController;
 
-    public systemProcessStorage(OS os)
+    public systemStorage(OS os)
     {
         this.jobQueue = new LinkedList<>();
         this.readyQueue = new LinkedList<>();
         this.waitQueue = new LinkedList<>();
         this.blockQueue = new LinkedList<>();
-        this.readyQueueInLinkedList = new LinkedList<>();
+        this.readyLinkedListQueue = new LinkedList<>();
         this.osController = os;
 
     }
@@ -59,7 +59,7 @@ public class systemProcessStorage<V>
 
     public LinkedList<Process> getReadyQueuePQ()
     {
-        return this.readyQueueInLinkedList;
+        return this.readyLinkedListQueue;
     }
 
     public boolean addProcessToJobQueue(Process process)
@@ -104,7 +104,7 @@ public class systemProcessStorage<V>
         try
         {
             System.out.println("|Process Warehouse| Adding most recent process to ready queue linked list");
-            this.readyQueueInLinkedList.add(process);
+            this.readyLinkedListQueue.add(process);
             Utilities.printBreakLine();
 
         }
@@ -120,7 +120,7 @@ public class systemProcessStorage<V>
         {
             if (id <= 0) throw new IllegalArgumentException("Invalid id");
             Process process = searchWithProcessId(id);
-            this.readyQueueInLinkedList.remove(process);
+            this.readyLinkedListQueue.remove(process);
             System.out.println("|Process Warehouse| Removing process (ID:" + id + ") out of the ready queue");
         }
         catch (Exception e)
@@ -161,7 +161,7 @@ public class systemProcessStorage<V>
             {
                 System.out.println("|Process Warehouse| Remove most recent process from the ready queue");
                 Process pwhProcess = this.readyQueue.poll();
-                System.out.println("Poll off process ID:" + pwhProcess.processControlBlock.retrieveId());
+                System.out.println("Poll off process ID:" + pwhProcess.pcb.retrieveId());
                 return pwhProcess;
             }
         }
@@ -173,7 +173,7 @@ public class systemProcessStorage<V>
         try
         {
             if (!Utilities.isValid(process)) throw new IllegalArgumentException("This process is not valid");
-            System.out.println("|Process Warehouse| Process ID: " + process.processControlBlock.retrieveId()+" has been moved to the end of the ready queue");
+            System.out.println("|Process Warehouse| Process ID: " + process.pcb.retrieveId()+" has been moved to the end of the ready queue");
             this.readyQueue.add(process);
         }
         catch (Exception e)
@@ -184,12 +184,12 @@ public class systemProcessStorage<V>
 
     public Process searchWithProcessId(int id)
     {
-        Iterator<Process> itr = this.readyQueueInLinkedList.iterator();
+        Iterator<Process> itr = this.readyLinkedListQueue.iterator();
 
         while (itr.hasNext())
         {
             Process realtimeProcess = itr.next();
-            int currentId = realtimeProcess.processControlBlock.retrieveId();
+            int currentId = realtimeProcess.pcb.retrieveId();
             if (currentId == id) return realtimeProcess;
         }
         return null;

@@ -2,13 +2,13 @@ package com.company;
 
 public abstract class Process
 {
-    PCB processControlBlock;
+    PCB pcb;
     public abstract void toExecute();
     public abstract void toTerminate();
-    public abstract void toWait(); // advanced function if implement waitQueue
-    public abstract void toBlocked(); // advanced function if implement blockQueue
+    public abstract void toWait();
+    public abstract void toBlocked();
     public Process getProcessById(int id) {
-        if (this.processControlBlock.retrieveId() == id) return this;
+        if (this.pcb.retrieveId() == id) return this;
         return null;
     }
 }

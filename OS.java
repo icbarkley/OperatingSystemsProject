@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public class OS
 {
-    systemProcessStorage pool;
+    systemStorage pool;
     systemScheduler systemScheduler;
     systemDispatcher systemDispatcher;
     CPU cpu;
@@ -53,13 +53,13 @@ public class OS
 
     public OS()
     {
-        this.pool = new systemProcessStorage(this);
+        this.pool = new systemStorage(this);
         this.systemScheduler = new systemScheduler(this);
         this.systemDispatcher = new systemDispatcher(this);
         this.cpu = new CPU();
     }
 
-    public OS(systemProcessStorage pool, systemScheduler systemScheduler, systemDispatcher systemDispatcher, CPU cpu)
+    public OS(systemStorage pool, systemScheduler systemScheduler, systemDispatcher systemDispatcher, CPU cpu)
     {
         this.pool = pool;
         this.systemScheduler = systemScheduler;
@@ -79,21 +79,18 @@ public class OS
         systemFinished = true;
     }
 
-    // main functionality
     public void start()
     {
-        //connect every instances together
-        System.out.println("||Process Warehouse||");
-        System.out.println("{Connect PWH with dispatcher}");
+        System.out.println("||Storage||");
+        System.out.println("{Connect storage with dispatcher}");
         this.pool.dispatcherConnection(this.systemDispatcher);
 
         System.out.println("||Scheduler||");
-        System.out.println("{Connect scheduler with PWH}");
+        System.out.println("{Connect scheduler with storage}");
         this.systemScheduler.connectToProcessStorage(this.pool);
         System.out.println("{Connect scheduler with dispatcher}");
         this.systemScheduler.connectToDispatcher(this.systemDispatcher);
 
-        // scheduler will pick a process, based on the method
         System.out.println("||Start Scheduler||");
         this.systemScheduler.start();
         System.out.println("print queue");
@@ -102,7 +99,7 @@ public class OS
         System.out.println("||Dispatcher||");
         System.out.println("{Connect dispatcher with scheduler}");
         this.systemDispatcher.schedulerConnection(this.systemScheduler);
-        System.out.println("{Connect dispatcher with PWH}");
+        System.out.println("{Connect dispatcher with storage}");
         this.systemDispatcher.processWarehouseConnection(this.pool);
 
         Collection readyQueue = this.pool.getReadyQueue();
@@ -117,7 +114,6 @@ public class OS
             System.out.println("||Still working...||");
     }
 
-    // new process will be added to job pool then move to ready queue
     public void addProcess(Process process)
     {
         try
@@ -165,13 +161,13 @@ public class OS
     }
 
 
-    public systemProcessStorage retrievePool()
+    public systemStorage retrievePool()
 
     {
         return pool;
     }
 
-    public void setPool(systemProcessStorage pool)
+    public void setPool(systemStorage pool)
     {
         this.pool = pool;
     }

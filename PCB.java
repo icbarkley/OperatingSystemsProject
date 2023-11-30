@@ -4,9 +4,9 @@ public class PCB implements iPCB
 {
     private int id;
     private String state;
-    private int priority; // used in priority queue method
-    private String ioInfo; //Demonstrated the potential to upgrade, Will not be used in this system
-    private int burstTime; // used in round robin method
+    private int priority;
+    private String ioInfo;
+    private int burstTime;
 
     PCB()
     {
