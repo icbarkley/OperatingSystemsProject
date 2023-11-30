@@ -1,7 +1,7 @@
 package com.company;
 
 public class systemDispatcher {
-    Scheduler taskScheduler;
+    systemScheduler taskSystemScheduler;
     systemProcessStorage systemProcessStorage;
     CPU systemCPU;
     String method;
@@ -37,8 +37,8 @@ public class systemDispatcher {
             if (!OS.isExecutingAProcess())
             {
                 Process process = this.retrieveProcessFromScheduler();
-                this.systemProcessStorage.removeProcessFromReadyQueueInLinkedListById(process.pcb.returnId());
-                System.out.println("|Dispatcher| Process ID: " + process.pcb.returnId() + " Priority: " + process.pcb.getPriority());
+                this.systemProcessStorage.removeProcessFromReadyQueueInLinkedListById(process.processControlBlock.retrieveId());
+                System.out.println("|Dispatcher| Process ID: " + process.processControlBlock.retrieveId() + " Priority: " + process.processControlBlock.retrievePriority());
 
                 stateAlterToRun(process);
                 OS.setIsExecutingAProcess(true);
@@ -64,12 +64,12 @@ public class systemDispatcher {
     public void startWithRoundRobinMethod()
     {
             Process process = this.retrieveProcessFromScheduler();
-            System.out.println("|Dispatcher| Process ID: " + process.pcb.returnId() + " Overall Time to Finish: " + process.pcb.getBurstTime());
+            System.out.println("|Dispatcher| Process ID: " + process.processControlBlock.retrieveId() + " Overall Time to Finish: " + process.processControlBlock.retrieveBurstTime());
             stateAlterToRun(process);
             this.systemCPU.setCurrent(process);
             this.systemCPU.toExecute();
             Utilities.printBreakLine();
-            if (process.pcb.getBurstTime() > 0)
+            if (process.processControlBlock.retrieveBurstTime() > 0)
             {
                 osController.changeProcessStateToReady(process);
                 this.systemProcessStorage.moveCurrentProcessToEndOfReadyQueue(process);
@@ -85,11 +85,11 @@ public class systemDispatcher {
             }
     }
 
-    public void schedulerConnection(Scheduler connectedScheduler)
+    public void schedulerConnection(systemScheduler connectedSystemScheduler)
     {
         try
         {
-            this.taskScheduler = connectedScheduler;
+            this.taskSystemScheduler = connectedSystemScheduler;
         }
         catch (Exception e)
         {
@@ -111,7 +111,7 @@ public class systemDispatcher {
 
     public Process retrieveProcessFromScheduler()
     {
-        Process process = taskScheduler.getProcess();
+        Process process = taskSystemScheduler.getProcess();
         if (process == null) osController.setSystemFinished(true);
         return process;
     }
@@ -120,8 +120,8 @@ public class systemDispatcher {
     {
         try
         {
-            process.pcb.setState("New");
-            System.out.println("|Dispatcher| Change the process (ID: " + process.pcb.returnId() + ") to state " + process.pcb.getState());
+            process.processControlBlock.setState("New");
+            System.out.println("|Dispatcher| Changed Process State (ID: " + process.processControlBlock.retrieveId() + ") Status: " + process.processControlBlock.retrieveState());
         }
         catch (Exception e)
         {
@@ -133,8 +133,8 @@ public class systemDispatcher {
     {
         try
         {
-            process.pcb.setState("Run");
-            System.out.println("|Dispatcher| Change process (ID: " + process.pcb.returnId() + ") to state " + process.pcb.getState());
+            process.processControlBlock.setState("Run");
+            System.out.println("|Dispatcher| Changed Process State (ID: " + process.processControlBlock.retrieveId() + ") Status: " + process.processControlBlock.retrieveState());
         }
         catch (Exception e)
         {
@@ -146,8 +146,8 @@ public class systemDispatcher {
     {
         try
         {
-            process.pcb.setState("Ready");
-            System.out.println("|Dispatcher| Change process (ID: " + process.pcb.returnId() + ") to state " + process.pcb.getState());
+            process.processControlBlock.setState("Ready");
+            System.out.println("|Dispatcher| Changed Process State (ID: " + process.processControlBlock.retrieveId() + ") Status: " + process.processControlBlock.retrieveState());
         }
         catch (Exception e)
         {
@@ -159,8 +159,8 @@ public class systemDispatcher {
     {
         try
         {
-            process.pcb.setState("Completed");
-            Utilities.printHeadLine("|Dispatcher| Change process (ID: " + process.pcb.returnId() + ") to state " + process.pcb.getState());
+            process.processControlBlock.setState("Completed");
+            System.out.println("|Dispatcher| Changed Process State (ID: " + process.processControlBlock.retrieveId() + ") Status: " + process.processControlBlock.retrieveState());
             Utilities.printBreakLine();
         }
         catch (Exception e)

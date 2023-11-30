@@ -2,91 +2,104 @@ package com.company;
 
 import java.util.Collection;
 
-public class OS {
+public class OS
+{
     systemProcessStorage pool;
-    Scheduler scheduler;
+    systemScheduler systemScheduler;
     systemDispatcher systemDispatcher;
     CPU cpu;
 
-    public boolean isSystemFinished() {
+    public boolean isSystemFinished()
+    {
         return systemFinished;
     }
 
-    public void setSystemFinished(boolean systemFinished) {
+    public void setSystemFinished(boolean systemFinished)
+    {
         this.systemFinished = systemFinished;
     }
 
     public boolean systemFinished;
     public static String method ;
 
-    public static boolean isExecutingAProcess() {
+    public static boolean isExecutingAProcess()
+    {
         return isExecutingAProcess;
     }
 
-    public static void setIsExecutingAProcess(boolean isExecutingAProcess) {
+    public static void setIsExecutingAProcess(boolean isExecutingAProcess)
+    {
         OS.isExecutingAProcess = isExecutingAProcess;
     }
 
     public static boolean isExecutingAProcess;
 
-    public static int getIdCurrentExecutingProcess() {
+    public static int getIdCurrentExecutingProcess()
+    {
         return idCurrentExecutingProcess;
     }
 
-    public static void setIdCurrentExecutingProcess(int idCurrentExecutingProcess) {
+    public static void setIdCurrentExecutingProcess(int idCurrentExecutingProcess)
+    {
         OS.idCurrentExecutingProcess = idCurrentExecutingProcess;
     }
 
     public static int idCurrentExecutingProcess;
 
-    public static void setMethod(String method) {
+    public static void setMethod(String method)
+    {
         OS.method = method;
     }
 
-    public OS() {
+    public OS()
+    {
         this.pool = new systemProcessStorage(this);
-        this.scheduler = new Scheduler(this);
+        this.systemScheduler = new systemScheduler(this);
         this.systemDispatcher = new systemDispatcher(this);
         this.cpu = new CPU();
     }
 
-    public OS(systemProcessStorage pool, Scheduler scheduler, systemDispatcher systemDispatcher, CPU cpu) {
+    public OS(systemProcessStorage pool, systemScheduler systemScheduler, systemDispatcher systemDispatcher, CPU cpu)
+    {
         this.pool = pool;
-        this.scheduler = scheduler;
+        this.systemScheduler = systemScheduler;
         this.systemDispatcher = systemDispatcher;
         this.cpu = cpu;
     }
 
-    public OS getOSController() {
+    public OS getOSController()
+    {
         return this;
     }
 
-    public void allWorksAreDone() {
+    public void allWorksAreDone()
+    {
         systemFinished = true;
     }
 
     // main functionality
-    public void start() {
+    public void start()
+    {
         //connect every instances together
-        System.out.println("||PWH: ||");
+        System.out.println("||Process Warehouse||");
         System.out.println("{Connect PWH with dispatcher}");
         this.pool.dispatcherConnection(this.systemDispatcher);
 
-        System.out.println("||Scheduler: ||");
+        System.out.println("||Scheduler||");
         System.out.println("{Connect scheduler with PWH}");
-        this.scheduler.connectToProcessStorage(this.pool);
+        this.systemScheduler.connectToProcessStorage(this.pool);
         System.out.println("{Connect scheduler with dispatcher}");
-        this.scheduler.connectToDispatcher(this.systemDispatcher);
+        this.systemScheduler.connectToDispatcher(this.systemDispatcher);
 
         // scheduler will pick a process, based on the method
         System.out.println("||Start Scheduler||");
-        this.scheduler.start();
+        this.systemScheduler.start();
         System.out.println("print queue");
-        this.scheduler.printPriorityQueue();
+        this.systemScheduler.printPriorityQueue();
 
-        System.out.println("||Dispatcher: ||");
+        System.out.println("||Dispatcher||");
         System.out.println("{Connect dispatcher with scheduler}");
-        this.systemDispatcher.schedulerConnection(this.scheduler);
+        this.systemDispatcher.schedulerConnection(this.systemScheduler);
         System.out.println("{Connect dispatcher with PWH}");
         this.systemDispatcher.processWarehouseConnection(this.pool);
 
@@ -150,6 +163,7 @@ public class OS {
 
 
     public systemProcessStorage retrievePool()
+
     {
         return pool;
     }
@@ -159,14 +173,14 @@ public class OS {
         this.pool = pool;
     }
 
-    public Scheduler retrieveScheduler()
+    public systemScheduler retrieveScheduler()
     {
-        return scheduler;
+        return systemScheduler;
     }
 
-    public void setScheduler(Scheduler scheduler)
+    public void setScheduler(systemScheduler systemScheduler)
     {
-        this.scheduler = scheduler;
+        this.systemScheduler = systemScheduler;
     }
 
     public systemDispatcher retrieveDispatcher()

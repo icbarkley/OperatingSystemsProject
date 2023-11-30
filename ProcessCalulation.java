@@ -8,9 +8,9 @@ public class ProcessCalulation extends Process
 
     public ProcessCalulation(PCB processControlBlock)
     {
-        this.pcb = processControlBlock;
+        this.processControlBlock = processControlBlock;
         this.isFinished = false;
-        System.out.println("A new calculation process has been created. (ID:" + this.pcb.returnId());
+        System.out.println("A new calculation process has been created. (ID:" + this.processControlBlock.retrieveId() + ")");
     }
 
     @Override
@@ -18,7 +18,7 @@ public class ProcessCalulation extends Process
     {
         if (OS.isPriorityQueueMethod())
         {
-            System.out.println("Process is now being executed (ID:" + this.pcb.returnId());
+            System.out.println("Process is now being executed (ID:" + this.processControlBlock.retrieveId());
             System.out.println("Matrix derivation: " + randomNumGen());
             System.out.println("Matrix abacus: " + randomNumGen());
             this.toTerminate();
@@ -26,23 +26,23 @@ public class ProcessCalulation extends Process
 
         if (OS.isRoundRobinMethod())
         {
-            System.out.println("Process (ID: " + this.pcb.returnId() + ") is currently executed for " + systemDispatcher.timeQuantum + " time quantum.");
+            System.out.println("Process (ID: " + this.processControlBlock.retrieveId() + ") is currently executed for " + systemDispatcher.timeQuantum + " time quantum.");
 
-            int newBurstTime = this.pcb.getBurstTime() - 1;
+            int newBurstTime = this.processControlBlock.retrieveBurstTime() - 1;
             if  (newBurstTime <= 0)
             {
                 System.out.println("Matrix derivation: " + randomNumGen());
                 System.out.println("Matrix abacus: " + randomNumGen());
                 this.toTerminate();
             }
-            this.pcb.setBurstTime(newBurstTime);
+            this.processControlBlock.setBurstTime(newBurstTime);
         }
     }
 
     @Override
     public void toTerminate()
     {
-        System.out.println("Process id:" + this.pcb.returnId() + " is terminated");
+        System.out.println("Process (ID:" + this.processControlBlock.retrieveId() + ") has been terminated");
         OS.setIsExecutingAProcess(false);
     }
 

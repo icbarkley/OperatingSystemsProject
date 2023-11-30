@@ -4,33 +4,41 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 //         Uncomment and run to see the question
          scheduling();
 //         multithreading();
 
     }
 
-    public static void scheduling() {
+    public static void scheduling()
+    {
         Scanner scanner = new Scanner(System.in);
         System.out.print("1: Round Robin | 2: Priority Queue: ");
         String choice = scanner.nextLine();
-         while (!choice.equals("1") && !choice.equals("2")) {
+
+        while (!choice.equals("1") && !choice.equals("2"))
+         {
              Utilities.errorMsg("I said 1 OR 2!!!");
              choice = scanner.nextLine();
         }
 
-        if (Integer.parseInt(choice) == 1) {
+        if (Integer.parseInt(choice) == 1)
+        {
             simulateRoundRobin();
         }
-        else if (Integer.parseInt(choice) == 2) {
+        else if (Integer.parseInt(choice) == 2)
+        {
             simulatePriorityQueue();
         }
     }
 
-    public static void simulateRoundRobin() {
-        try{
-            Utilities.printHeadLine("Start the OS");
+    public static void simulateRoundRobin()
+    {
+        try
+        {
+            System.out.println("-=||Starting Up The NoahBark OS||=-");
             OS os = new OS();
             OS.setMethod("RR");
 
@@ -49,14 +57,18 @@ public class Main {
             os.addProcess(time3);
             os.addProcess(time4);
             os.start();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Utilities.errorMsg(e.getMessage());
         }
     }
 
-    public static void simulatePriorityQueue() {
-        try{
-            Utilities.printHeadLine("Start the OS");
+    public static void simulatePriorityQueue()
+    {
+        try
+        {
+            System.out.println("-=||Starting Up The NoahBark OS||=-");
             OS os = new OS();
             OS.setMethod("PQ");
 
@@ -76,12 +88,15 @@ public class Main {
             os.addProcess(time2);
 //        start the OS
             os.start();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             Utilities.errorMsg(e.getMessage());
         }
     }
 
-    public static void multithreading() {
+    public static void multithreading()
+    {
         new systemPriorityQueue();
         new RoundRobin();
     }

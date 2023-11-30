@@ -1,13 +1,15 @@
 package com.company;
 
-public class PCB implements iPCB {
+public class PCB implements iPCB
+{
     private int id;
-    private String state; // dispatcher manage this
+    private String state;
     private int priority; // used in priority queue method
     private String ioInfo; //Demonstrated the potential to upgrade, Will not be used in this system
     private int burstTime; // used in round robin method
 
-    PCB() {
+    PCB()
+    {
         this.id = 0;
         this.state = "";
         this.priority = 0;
@@ -15,48 +17,59 @@ public class PCB implements iPCB {
         this.burstTime = 0;
     }
 
-    public int returnId() {
+    public int retrieveId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public String getState() {
+    public String retrieveState()
+    {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(String state)
+    {
         this.state = state;
     }
 
-    public int getPriority() {
+    public int retrievePriority()
+    {
         return priority;
     }
 
-    public void setPriority(int priority) {
+    public void setPriority(int priority)
+    {
         this.priority = priority;
     }
 
-    public String getIoInfo() {
+    public String retrieveIoInfo()
+    {
         return ioInfo;
     }
 
-    public void setIoInfo(String ioInfo) {
+    public void setIoInfo(String ioInfo)
+    {
         this.ioInfo = ioInfo;
     }
 
-    public int getBurstTime() {
+    public int retrieveBurstTime()
+    {
         return burstTime;
     }
 
-    public void setBurstTime(int burstTime) {
+    public void setBurstTime(int burstTime)
+    {
         this.burstTime = burstTime;
     }
 
     @Override
-    public void printLog() {
-        System.out.println("Process id: " + this.returnId() + "\nProcess Priority" + this.getPriority());
+    public void printLog()
+    {
+        System.out.println("Process (ID: " + this.retrieveId() + ") \nProcess Priority: " + this.retrievePriority());
     }
 }
