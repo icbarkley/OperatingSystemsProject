@@ -66,7 +66,7 @@ public class systemStorage<V>
     {
         try
         {
-            System.out.println("|Process Warehouse|");
+            System.out.println("|Storage|");
             System.out.println("Adding the most recent process to job queue");
 
             this.jobQueue.add(process);
@@ -103,7 +103,8 @@ public class systemStorage<V>
     {
         try
         {
-            System.out.println("|Process Warehouse| Adding most recent process to ready queue linked list");
+            System.out.println("|Storage|");
+            System.out.println("Adding most recent process to ready queue linked list");
             this.readyLinkedListQueue.add(process);
             Utilities.printBreakLine();
 
@@ -121,7 +122,7 @@ public class systemStorage<V>
             if (id <= 0) throw new IllegalArgumentException("Invalid id");
             Process process = searchWithProcessId(id);
             this.readyLinkedListQueue.remove(process);
-            System.out.println("|Process Warehouse| Removing process (ID:" + id + ") out of the ready queue");
+            System.out.println("|Storage| Removing process (ID:" + id + ") out of the ready queue");
         }
         catch (Exception e)
         {
@@ -133,7 +134,7 @@ public class systemStorage<V>
     {
         try
         {
-            System.out.println("|Process Warehouse| Adding the most recent process to the ready queue");
+            System.out.println("|Storage| Adding the most recent process to the ready queue");
             osController.changeStateToReady(process);
             if (OS.isPriorityQueue())
             {
@@ -142,7 +143,7 @@ public class systemStorage<V>
 
             else if (OS.isRoundRobin())
             {
-                System.out.println("|Process Warehouse| Adding the most recent process to the ready queue in Round Robin");
+                System.out.println("|Storage| Adding the most recent process to the ready queue in Round Robin");
                 this.moveCurrentProcessToEndOfReadyQueue(process);
             }
             Utilities.printBreakLine();
@@ -159,7 +160,7 @@ public class systemStorage<V>
         {
             if (!queueContainsNothing(readyQueue))
             {
-                System.out.println("|Process Warehouse| Remove most recent process from the ready queue");
+                System.out.println("|Storage| Remove most recent process from the ready queue");
                 Process pwhProcess = this.readyQueue.poll();
                 System.out.println("Poll off process ID:" + pwhProcess.pcb.retrieveId());
                 return pwhProcess;
@@ -173,7 +174,7 @@ public class systemStorage<V>
         try
         {
             if (!Utilities.isValid(process)) throw new IllegalArgumentException("This process is not valid");
-            System.out.println("|Process Warehouse| Process ID: " + process.pcb.retrieveId()+" has been moved to the end of the ready queue");
+            System.out.println("|Storage| Process ID: " + process.pcb.retrieveId()+" has been moved to the end of the ready queue");
             this.readyQueue.add(process);
         }
         catch (Exception e)
@@ -195,7 +196,7 @@ public class systemStorage<V>
         return null;
     }
 
-    public boolean isProcessInWareHouse(Process process)
+    public boolean isInStorage(Process process)
     {
         return (withinJobQueue(process) || withinReadyQueue(process) || withinBlockQueue(process) || withinWaitQueue(process));
     }
