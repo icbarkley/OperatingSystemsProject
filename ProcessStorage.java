@@ -34,7 +34,7 @@ public class ProcessStorage<V> {
         try {
             this.systemDispatcher = systemDispatcher;
         } catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 
@@ -144,7 +144,7 @@ public class ProcessStorage<V> {
             Utilities.print("In PWH: Move the process id: " + process.pcb.getId()+" to the end of ready queue");
             this.readyQueue.add(process);
         } catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 

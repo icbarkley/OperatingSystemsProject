@@ -117,7 +117,7 @@ public class OS {
                 this.pool.addProcessToReadyQueue(process);
             }
         }catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
     // end of main functionalities

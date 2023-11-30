@@ -35,7 +35,7 @@ public class RoundRobin implements Runnable {
             os.addProcess(time4);
             os.start();
         } catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 }

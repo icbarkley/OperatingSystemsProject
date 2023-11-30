@@ -4,7 +4,7 @@ public class Utilities {
     static void print(String message) {
         System.out.println(message);
     }
-    static void printErr(String message)  {
+    static void errorMsg(String message)  {
         System.out.println("WRONG " + message);
     }
     static void printHeadLine(String message)  {

@@ -58,7 +58,7 @@ public class systemDispatcher {
         }
         catch (Exception e)
         {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 
@@ -92,7 +92,7 @@ public class systemDispatcher {
         {
             this.taskScheduler = scheduler;
         } catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 
@@ -103,7 +103,7 @@ public class systemDispatcher {
             this.processStorage = processWareHouse;
         } catch (Exception e)
         {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 
@@ -124,7 +124,7 @@ public class systemDispatcher {
         }
         catch (Exception e)
         {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 
@@ -138,7 +138,7 @@ public class systemDispatcher {
         }
         catch (Exception e)
         {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 
@@ -152,7 +152,7 @@ public class systemDispatcher {
         }
         catch (Exception e)
         {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 
@@ -167,7 +167,7 @@ public class systemDispatcher {
         }
         catch (Exception e)
         {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 

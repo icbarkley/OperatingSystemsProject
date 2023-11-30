@@ -16,7 +16,7 @@ public class Main {
         System.out.print("Priority queue: press 1, Round robin: press 2: ");
         String choice = scanner.nextLine();
          while (!choice.equals("1") && !choice.equals("2")) {
-             Utilities.printErr("I said 1 OR 2!!!");
+             Utilities.errorMsg("I said 1 OR 2!!!");
              choice = scanner.nextLine();
         }
 
@@ -50,7 +50,7 @@ public class Main {
             os.addProcess(time4);
             os.start();
         } catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 
@@ -77,12 +77,12 @@ public class Main {
 //        start the OS
             os.start();
         } catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 
     public static void multithreading() {
-        new PriorityQueue();
+        new systemPriorityQueue();
         new RoundRobin();
     }
 }

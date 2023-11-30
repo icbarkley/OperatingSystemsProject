@@ -21,7 +21,7 @@ public class Scheduler {
         try {
             this.processStorage = processStorage;
         } catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
 
@@ -29,7 +29,7 @@ public class Scheduler {
         try {
             this.systemDispatcher = systemDispatcher;
         } catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
     }
     //end
@@ -88,7 +88,7 @@ public class Scheduler {
             }
             process = this.processStorage.getMostCurrentProcessFromReadyQueue();
         } catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
         }
         return process;
     }
@@ -115,11 +115,11 @@ public class Scheduler {
                         process.pcb.getPriority());
                 return true;
             } else {
-                Utilities.printErr("Cannot add to map");
+                Utilities.errorMsg("Cannot add to map");
                 return false;
             }
         } catch (Exception e) {
-            Utilities.printErr(e.getMessage());
+            Utilities.errorMsg(e.getMessage());
             return false;
         }
     }
