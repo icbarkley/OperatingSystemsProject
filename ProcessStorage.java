@@ -16,7 +16,7 @@ public class ProcessStorage<V> {
     Queue<Process> waitQueue;
     Queue<Process> blockQueue;
 
-    Dispatcher dispatcher;
+    systemDispatcher systemDispatcher;
     // OS
     OS osController;
 
@@ -30,9 +30,9 @@ public class ProcessStorage<V> {
 
     }
 
-    public void connectToDispatcher(Dispatcher dispatcher) {
+    public void connectToDispatcher(systemDispatcher systemDispatcher) {
         try {
-            this.dispatcher = dispatcher;
+            this.systemDispatcher = systemDispatcher;
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
         }

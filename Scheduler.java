@@ -6,7 +6,7 @@ public class Scheduler {
     Queue<Integer> priorityQueue;
     Map<Integer, Integer> idAndBurstTimeMap;
     ProcessStorage processStorage;
-    Dispatcher dispatcher;
+    systemDispatcher systemDispatcher;
     OS osController;
 
     public Scheduler(OS osController) {
@@ -25,9 +25,9 @@ public class Scheduler {
         }
     }
 
-    public void connectToDispatcher(Dispatcher dispatcher) {
+    public void connectToDispatcher(systemDispatcher systemDispatcher) {
         try {
-            this.dispatcher = dispatcher;
+            this.systemDispatcher = systemDispatcher;
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
         }

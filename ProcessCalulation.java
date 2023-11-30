@@ -25,7 +25,7 @@ public class ProcessCalulation extends Process {
 
         if (OS.isRoundRobinMethod()) {
             Utilities.print("Process id:" + this.pcb.getId()
-                    + " is being executed for " + Dispatcher.timeQuantum + " time quantum.");
+                    + " is being executed for " + systemDispatcher.timeQuantum + " time quantum.");
             int newBurstTime = this.pcb.getBurstTime() - 1;
             if  (newBurstTime <= 0) {
                 Utilities.print("The matrix derivation is " + randomNumber());

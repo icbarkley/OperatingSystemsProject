@@ -5,7 +5,7 @@ import java.util.Collection;
 public class OS {
     ProcessStorage pool;
     Scheduler scheduler;
-    Dispatcher dispatcher;
+    systemDispatcher systemDispatcher;
     CPU cpu;
 
     public boolean isAllWorksAreDone() {
@@ -46,14 +46,14 @@ public class OS {
     public OS() {
         this.pool = new ProcessStorage(this);
         this.scheduler = new Scheduler(this);
-        this.dispatcher = new Dispatcher(this);
+        this.systemDispatcher = new systemDispatcher(this);
         this.cpu = new CPU();
     }
 
-    public OS(ProcessStorage pool, Scheduler scheduler, Dispatcher dispatcher, CPU cpu) {
+    public OS(ProcessStorage pool, Scheduler scheduler, systemDispatcher systemDispatcher, CPU cpu) {
         this.pool = pool;
         this.scheduler = scheduler;
-        this.dispatcher = dispatcher;
+        this.systemDispatcher = systemDispatcher;
         this.cpu = cpu;
     }
 
@@ -70,13 +70,13 @@ public class OS {
         //connect every instances together
         Utilities.printHeadLine("PWH: ");
         Utilities.printSubLine("Connect PWH with dispatcher");
-        this.pool.connectToDispatcher(this.dispatcher);
+        this.pool.connectToDispatcher(this.systemDispatcher);
 
         Utilities.printHeadLine("Scheduler: ");
         Utilities.printSubLine("Connect scheduler with PWH");
         this.scheduler.connectToProcessStorage(this.pool);
         Utilities.printSubLine("Connect scheduler with dispatcher");
-        this.scheduler.connectToDispatcher(this.dispatcher);
+        this.scheduler.connectToDispatcher(this.systemDispatcher);
 
         // scheduler will pick a process, based on the method
         Utilities.printHeadLine("start scheduler");
@@ -86,14 +86,14 @@ public class OS {
 
         Utilities.printHeadLine("Dispatcher: ");
         Utilities.printSubLine("Connect dispatcher with scheduler");
-        this.dispatcher.connectToScheduler(this.scheduler);
+        this.systemDispatcher.connectToScheduler(this.scheduler);
         Utilities.printSubLine("Connect dispatcher with PWH");
-        this.dispatcher.connectToProcessWareHouse(this.pool);
+        this.systemDispatcher.connectToProcessWareHouse(this.pool);
 
         Collection readyQueue = this.pool.getReadyQueue();
 
         while (!readyQueue.isEmpty()) {
-            this.dispatcher.start();
+            this.systemDispatcher.start();
         }
         if (allWorksAreDone) Utilities.printHeadLine("All work are done");
         else Utilities.printHeadLine("Not done");
@@ -104,7 +104,7 @@ public class OS {
         try {
             Utilities.printHeadLine("A new process is created in the OS");
             //Os talk to the process ware house
-            this.dispatcher.changeStateToNew(process);
+            this.systemDispatcher.changeStateToNew(process);
             if (isPriorityQueueMethod()) {
                 this.pool.addProcessToJobQueue(process);
                 this.pool.removeMostCurrentProcessFromJobQueue();
@@ -146,12 +146,12 @@ public class OS {
         this.scheduler = scheduler;
     }
 
-    public Dispatcher getDispatcher() {
-        return dispatcher;
+    public systemDispatcher getDispatcher() {
+        return systemDispatcher;
     }
 
-    public void setDispatcher(Dispatcher dispatcher) {
-        this.dispatcher = dispatcher;
+    public void setDispatcher(systemDispatcher systemDispatcher) {
+        this.systemDispatcher = systemDispatcher;
     }
 
     public CPU getCpu() {
@@ -164,6 +164,6 @@ public class OS {
 
     //Actions
     public void changeProcessStateToReady(Process process) {
-        this.dispatcher.changeStateToReady(process);
+        this.systemDispatcher.changeStateToReady(process);
     }
 }
