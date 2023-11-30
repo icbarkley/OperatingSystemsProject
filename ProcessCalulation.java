@@ -6,15 +6,15 @@ public class ProcessCalulation extends Process {
     boolean isFinished;
 
     public ProcessCalulation(PCB processControlBlock) {
-        this.processControlBlock = processControlBlock;
+        this.pcb = processControlBlock;
         this.isFinished = false;
-        Utilities.print("A new calculate process with id:" + this.processControlBlock.getId() + " is created.");
+        Utilities.print("A new calculate process with id:" + this.pcb.getId() + " is created.");
     }
 
     @Override
     public void toExecute() {
         if (OS.isPriorityQueueMethod()) {
-            Utilities.print("Process id:" + this.processControlBlock.getId()
+            Utilities.print("Process id:" + this.pcb.getId()
                     + " is being executed");
 
 
@@ -24,21 +24,21 @@ public class ProcessCalulation extends Process {
         }
 
         if (OS.isRoundRobinMethod()) {
-            Utilities.print("Process id:" + this.processControlBlock.getId()
+            Utilities.print("Process id:" + this.pcb.getId()
                     + " is being executed for " + Dispatcher.timeQuantum + " time quantum.");
-            int newBurstTime = this.processControlBlock.getBurstTime() - 1;
+            int newBurstTime = this.pcb.getBurstTime() - 1;
             if  (newBurstTime <= 0) {
                 Utilities.print("The matrix derivation is " + randomNumber());
                 Utilities.print("The matrix abacus is " + randomNumber());
                 this.toTerminate();
             }
-            this.processControlBlock.setBurstTime(newBurstTime);
+            this.pcb.setBurstTime(newBurstTime);
         }
     }
 
     @Override
     public void toTerminate() {
-        Utilities.print("Process id:" + this.processControlBlock.getId()
+        Utilities.print("Process id:" + this.pcb.getId()
                 + " is terminated");
         OS.setIsExecutingAProcess(false);
     }

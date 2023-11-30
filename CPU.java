@@ -13,11 +13,11 @@ public class CPU {
 
     public void setCurrent(Process process) {
         this.current = process;
-        Utilities.print("CPU get a new process - " + "process id: " + current.processControlBlock.getId());
+        Utilities.print("CPU get a new process - " + "process id: " + current.pcb.getId());
     }
 
     public void toExecute() {
-        int id = current.processControlBlock.getId();
+        int id = current.pcb.getId();
         Utilities.print("CPU is executing " + "process id: " + id);
         OS.setIdCurrentExecutingProcess(id);
         this.current.toExecute();

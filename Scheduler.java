@@ -57,13 +57,13 @@ public class Scheduler {
 
         if (OS.isPriorityQueueMethod()) {
             com.company.Process process = getPriorityQueueProcess();
-            Utilities.printSubLine("In scheduler: The retrieved process id: " + process.processControlBlock.getId());
+            Utilities.printSubLine("In scheduler: The retrieved process id: " + process.pcb.getId());
             return process;
         }
 
         if (OS.isRoundRobinMethod()) {
             Process process = getRoundRobinProcess();
-            Utilities.printSubLine("In scheduler: The retrieved process id: " + process.processControlBlock.getId());
+            Utilities.printSubLine("In scheduler: The retrieved process id: " + process.pcb.getId());
             return process;
         }
         return null;
@@ -110,9 +110,9 @@ public class Scheduler {
         try {
             // Very crucial condition check to separate the 2 thread
             // If specify same properties, one thread can know and change data of another thread
-            if (process.processControlBlock.getId() > 0 || process.processControlBlock.getPriority() != 0) {
-                idAndBurstTimeMap.put(process.processControlBlock.getId(),
-                        process.processControlBlock.getPriority());
+            if (process.pcb.getId() > 0 || process.pcb.getPriority() != 0) {
+                idAndBurstTimeMap.put(process.pcb.getId(),
+                        process.pcb.getPriority());
                 return true;
             } else {
                 Utilities.printErr("Cannot add to map");
@@ -123,7 +123,6 @@ public class Scheduler {
             return false;
         }
     }
-
 
     public void createPriorityQueue() {
         LinkedHashMap<Integer, Integer> sortedMap = new LinkedHashMap<>();

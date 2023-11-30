@@ -131,7 +131,7 @@ public class ProcessStorage<V> {
             if (!isQueueEmpty(readyQueue)) {
                 Utilities.print("In PWH: Remove most current process from ready queue");
                 Process process = this.readyQueue.poll();
-                Utilities.print("The poll off process is id " + process.processControlBlock.getId());
+                Utilities.print("The poll off process is id " + process.pcb.getId());
                 return process;
             }
         }
@@ -140,8 +140,8 @@ public class ProcessStorage<V> {
     // if still has burst time then return the process to the end of ready Queue
     public void moveCurrentProcessToTheEndOfReadyQueue(Process process) {
         try {
-            if (!Utilities.isValidProcess(process)) throw new IllegalArgumentException("The process is not valid");
-            Utilities.print("In PWH: Move the process id: " + process.processControlBlock.getId()+" to the end of ready queue");
+            if (!Utilities.isValid(process)) throw new IllegalArgumentException("The process is not valid");
+            Utilities.print("In PWH: Move the process id: " + process.pcb.getId()+" to the end of ready queue");
             this.readyQueue.add(process);
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
@@ -157,7 +157,7 @@ public class ProcessStorage<V> {
 
         while (itr.hasNext()) {
             Process currentProcess = itr.next();
-            int currentId = currentProcess.processControlBlock.getId();
+            int currentId = currentProcess.pcb.getId();
             if (currentId == id) return currentProcess;
         }
         return null;

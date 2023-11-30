@@ -32,10 +32,10 @@ public class Dispatcher {
         try {
             if (!OS.isExecutingAProcess()) {
                 Process process = this.getProcessFromScheduler();
-                this.processStorage.removeProcessFromReadyQueueInLinkedListById(process.processControlBlock.getId());
+                this.processStorage.removeProcessFromReadyQueueInLinkedListById(process.pcb.getId());
                 //move this to ready state
-                Utilities.print("In Dispatcher: process id: " + process.processControlBlock.getId() +
-                        "- priority: " + process.processControlBlock.getPriority());
+                Utilities.print("In Dispatcher: process id: " + process.pcb.getId() +
+                        "- priority: " + process.pcb.getPriority());
 
                 //move to run state and execute the process
                 changeStateToRun(process);
@@ -59,13 +59,13 @@ public class Dispatcher {
 
     public void startWithRoundRobinMethod() {
             Process process = this.getProcessFromScheduler();
-            Utilities.print("In Dispatcher: process id: " + process.processControlBlock.getId() +
-                    "- total time needed to finish: " + process.processControlBlock.getBurstTime());
+            Utilities.print("In Dispatcher: process id: " + process.pcb.getId() +
+                    "- total time needed to finish: " + process.pcb.getBurstTime());
             changeStateToRun(process);
             this.cpu.setCurrent(process);
             this.cpu.toExecute();
             Utilities.printBreakLine();
-            if (process.processControlBlock.getBurstTime() > 0) {
+            if (process.pcb.getBurstTime() > 0) {
                 osController.changeProcessStateToReady(process);
                 this.processStorage.moveCurrentProcessToTheEndOfReadyQueue(process);
             } else {
@@ -106,9 +106,9 @@ public class Dispatcher {
     // Change state functionality
     public void changeStateToNew(Process process) {
         try {
-            process.processControlBlock.setState("New");
+            process.pcb.setState("New");
             Utilities.printHeadLine("In Dispatcher: Change the process with id " +
-                    process.processControlBlock.getId() + " to state " + process.processControlBlock.getState());
+                    process.pcb.getId() + " to state " + process.pcb.getState());
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
         }
@@ -116,9 +116,9 @@ public class Dispatcher {
 
     public void changeStateToRun(Process process) {
         try {
-            process.processControlBlock.setState("Run");
+            process.pcb.setState("Run");
             Utilities.printHeadLine("In Dispatcher: Change the process with id " +
-                    process.processControlBlock.getId() + " to state " + process.processControlBlock.getState());
+                    process.pcb.getId() + " to state " + process.pcb.getState());
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
         }
@@ -126,9 +126,9 @@ public class Dispatcher {
 
     public void changeStateToReady(Process process) {
         try {
-            process.processControlBlock.setState("Ready");
+            process.pcb.setState("Ready");
             Utilities.printHeadLine("In Dispatcher: Change the process with id " +
-                    process.processControlBlock.getId() + " to state " + process.processControlBlock.getState());
+                    process.pcb.getId() + " to state " + process.pcb.getState());
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
         }
@@ -136,9 +136,9 @@ public class Dispatcher {
 
     public void changeStateToCompleted(Process process) {
         try {
-            process.processControlBlock.setState("Completed");
+            process.pcb.setState("Completed");
             Utilities.printHeadLine("In Dispatcher: Change the process with id " +
-                    process.processControlBlock.getId() + " to state " + process.processControlBlock.getState());
+                    process.pcb.getId() + " to state " + process.pcb.getState());
             Utilities.printBreakLine();
         } catch (Exception e) {
             Utilities.printErr(e.getMessage());
