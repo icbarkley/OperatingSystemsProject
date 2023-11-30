@@ -15,7 +15,7 @@ public class systemPriorityQueue implements Runnable
     {
         try
         {
-            System.out.println("||Starting Up Operating System||");
+            System.out.println("||Starting Up The NoahBark OS||");
             OS mainOS = new OS();
             OS.setMethod("PQ");
 

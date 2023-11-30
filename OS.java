@@ -98,9 +98,9 @@ public class OS
 
         System.out.println("||Dispatcher||");
         System.out.println("{Connect dispatcher with scheduler}");
-        this.systemDispatcher.schedulerConnection(this.systemScheduler);
+        this.systemDispatcher.connectScheduler(this.systemScheduler);
         System.out.println("{Connect dispatcher with storage}");
-        this.systemDispatcher.processWarehouseConnection(this.pool);
+        this.systemDispatcher.connectStorage(this.pool);
 
         Collection readyQueue = this.pool.getReadyQueue();
 
@@ -204,6 +204,6 @@ public class OS
 
     public void changeStateToReady(Process process)
     {
-        this.systemDispatcher.stateAlterToReady(process);
+        this.systemDispatcher.changeStateToReady(process);
     }
 }

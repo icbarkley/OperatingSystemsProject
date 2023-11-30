@@ -6,7 +6,7 @@ public class systemRoundRobin implements Runnable
 
     public systemRoundRobin()
     {
-        System.out.println("||In RR thread||");
+        System.out.println("||In Round Robin thread||");
         sysThread = new Thread(this);
         sysThread.start();
     }
@@ -17,19 +17,17 @@ public class systemRoundRobin implements Runnable
     {
         try
         {
-            System.out.println("||Turning on the Operating System||");
+            System.out.println("||Starting Up The NoahBark OS||");
             OS os = new OS();
             OS.setMethod("RR");
 
             PCB pcb3 = new PCB();
             pcb3.setId(3);
-//            pcb3.setPriority(6);
             pcb3.setBurstTime(3);
             Process time3= new ProcessCalulation(pcb3);
 
             PCB pcb4 = new PCB();
             pcb4.setId(4);
-//            pcb4.setPriority(1);
             pcb4.setBurstTime(2);
             Process time4 = new ProcessCalulation(pcb4);
 

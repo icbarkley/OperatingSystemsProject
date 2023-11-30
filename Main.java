@@ -7,8 +7,8 @@ public class Main {
     public static void main(String[] args)
     {
 //         comment and uncomment either scheduling or multithreading for which function you want to run
-         scheduling();
-//         multithreading();
+//         scheduling();
+         multithreading();
 
     }
 

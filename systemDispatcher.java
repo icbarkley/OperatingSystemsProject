@@ -26,7 +26,7 @@ public class systemDispatcher {
 
         if (OS.isRoundRobin())
         {
-            startWithRoundRobinMethod();
+            startRoundRobin();
         }
     }
 
@@ -36,17 +36,17 @@ public class systemDispatcher {
         {
             if (!OS.isExecuting())
             {
-                Process process = this.retrieveProcessFromScheduler();
+                Process process = this.retrieveProcess();
                 this.systemStorage.removeProcessFromReadyQueueInLinkedListById(process.pcb.retrieveId());
                 System.out.println("|Dispatcher| Process ID: " + process.pcb.retrieveId() + " Priority: " + process.pcb.retrievePriority());
 
-                stateAlterToRun(process);
+                changeStateToRun(process);
                 OS.setIsExecuting(true);
                 this.systemCPU.setCurrent(process);
                 this.systemCPU.toExecute();
 
                 if (!OS.isExecuting())
-                    setStateAsCompleted(process);
+                    changeStateToFinished(process);
 
                 if (systemStorage.queueContainsNothing(systemStorage.readyQueue))
                 {
@@ -61,11 +61,11 @@ public class systemDispatcher {
         }
     }
 
-    public void startWithRoundRobinMethod()
+    public void startRoundRobin()
     {
-            Process process = this.retrieveProcessFromScheduler();
+            Process process = this.retrieveProcess();
             System.out.println("|Dispatcher| Process ID: " + process.pcb.retrieveId() + " Overall Time to Finish: " + process.pcb.retrieveBurstTime());
-            stateAlterToRun(process);
+            changeStateToRun(process);
             this.systemCPU.setCurrent(process);
             this.systemCPU.toExecute();
             Utilities.printBreakLine();
@@ -76,7 +76,7 @@ public class systemDispatcher {
             }
             else
             {
-                setStateAsCompleted(process);
+                changeStateToFinished(process);
             }
 
             if (systemStorage.queueContainsNothing(systemStorage.readyQueue))
@@ -85,7 +85,7 @@ public class systemDispatcher {
             }
     }
 
-    public void schedulerConnection(systemScheduler connectedSystemScheduler)
+    public void connectScheduler(systemScheduler connectedSystemScheduler)
     {
         try
         {
@@ -97,11 +97,11 @@ public class systemDispatcher {
         }
     }
 
-    public void processWarehouseConnection(systemStorage connectedProcessWarehouse)
+    public void connectStorage(systemStorage connectedStorage)
     {
         try
         {
-            this.systemStorage = connectedProcessWarehouse;
+            this.systemStorage = connectedStorage;
         }
         catch (Exception e)
         {
@@ -109,7 +109,7 @@ public class systemDispatcher {
         }
     }
 
-    public Process retrieveProcessFromScheduler()
+    public Process retrieveProcess()
     {
         Process process = taskSystemScheduler.getProcess();
         if (process == null) osController.setSystemFinished(true);
@@ -129,7 +129,7 @@ public class systemDispatcher {
         }
     }
 
-    public void stateAlterToRun(Process process)
+    public void changeStateToRun(Process process)
     {
         try
         {
@@ -142,7 +142,7 @@ public class systemDispatcher {
         }
     }
 
-    public void stateAlterToReady(Process process)
+    public void changeStateToReady(Process process)
     {
         try
         {
@@ -155,11 +155,11 @@ public class systemDispatcher {
         }
     }
 
-    public void setStateAsCompleted(Process process)
+    public void changeStateToFinished(Process process)
     {
         try
         {
-            process.pcb.setState("Completed");
+            process.pcb.setState("Finished");
             System.out.println("|Dispatcher| Changed Process State (ID: " + process.pcb.retrieveId() + ") Status: " + process.pcb.retrieveState());
             Utilities.printBreakLine();
         }

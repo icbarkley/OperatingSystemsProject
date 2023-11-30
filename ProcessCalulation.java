@@ -3,7 +3,7 @@ import java.lang.Math;
 
 public class ProcessCalulation extends Process
 {
-    //    ProcessControlBlock processControlBlock;
+       // PCB pcb;
     boolean isFinished;
 
     public ProcessCalulation(PCB processControlBlock)
