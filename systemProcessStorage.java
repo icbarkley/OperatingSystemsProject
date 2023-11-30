@@ -27,17 +27,15 @@ public class systemProcessStorage<V>
     }
 
 
-
-
     public Collection<Process> getReadyQueue()
     {
         if (OS.isPriorityQueueMethod())
         {
-            return getReadyQueueIfPriorityQueue();
+            return getReadyQueuePQ();
         }
         if (OS.isRoundRobinMethod())
         {
-            return getReadyQueueIfRoundRobin();
+            return getReadyQueueRR();
         }
         return null;
     }
@@ -54,12 +52,12 @@ public class systemProcessStorage<V>
         }
     }
 
-    public Queue<Process> getReadyQueueIfRoundRobin()
+    public Queue<Process> getReadyQueueRR()
     {
         return this.readyQueue;
     }
 
-    public LinkedList<Process> getReadyQueueIfPriorityQueue()
+    public LinkedList<Process> getReadyQueuePQ()
     {
         return this.readyQueueInLinkedList;
     }
@@ -69,7 +67,8 @@ public class systemProcessStorage<V>
         try
         {
             Utilities.printSubLine("In process ware house(PWH): ");
-            Utilities.print("Add most current process to job queue");
+            System.out.println("Adding the most current process to job queue");
+
             this.jobQueue.add(process);
             return true;
         }
