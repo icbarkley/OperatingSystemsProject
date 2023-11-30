@@ -15,7 +15,7 @@ public class Utilities {
     }
     static void printBreakLine()  {System.out.println("--------------------------------------------------------------");
     }
-    static boolean isValid(Process process) {return process.pcb.getId() > 0;}
+    static boolean isValid(Process process) {return process.pcb.returnId() > 0;}
 
     static boolean isPriorityQueueMethod() {return  OS.method.equals("PQ");}
     static boolean isRoundRobinMethod() {return  OS.method.equals("RR");}

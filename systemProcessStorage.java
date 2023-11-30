@@ -66,7 +66,7 @@ public class systemProcessStorage<V>
     {
         try
         {
-            Utilities.printSubLine("In process ware house(PWH): ");
+            System.out.println("|Process Warehouse|");
             System.out.println("Adding the most current process to job queue");
 
             this.jobQueue.add(process);
@@ -83,7 +83,7 @@ public class systemProcessStorage<V>
     {
         try
         {
-            Utilities.print("Remove most current process from job queue");
+            System.out.println("Removing the most current process from job queue");
             if (!queueContainsNothing(jobQueue))
             {
                 Process process = this.jobQueue.remove();
@@ -94,7 +94,7 @@ public class systemProcessStorage<V>
         }
         catch (Exception e)
         {
-            Utilities.print("Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             return null;
         }
     }
@@ -103,15 +103,14 @@ public class systemProcessStorage<V>
     {
         try
         {
-
-            Utilities.print("In PWH: Add most current process to ready queue linked list");
+            System.out.println("|Process Warehouse| Adding most current process to ready queue linked list");
             this.readyQueueInLinkedList.add(process);
             Utilities.printBreakLine();
 
         }
         catch (Exception e)
         {
-            Utilities.print("Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -120,13 +119,13 @@ public class systemProcessStorage<V>
         try
         {
             if (id <= 0) throw new IllegalArgumentException("Invalid id");
-            Process process = searchProcessById(id);
+            Process process = searchWithProcessId(id);
             this.readyQueueInLinkedList.remove(process);
-            Utilities.print("In PWH: remove a process with id: " + id + " out of Ready Queue.");
+            System.out.println("|Process Warehouse| Removing process out of ready queue (id: " + id + ")");
         }
         catch (Exception e)
         {
-            Utilities.print("Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -134,7 +133,7 @@ public class systemProcessStorage<V>
     {
         try
         {
-            Utilities.print("In PWH: Add most current process to ready queue");
+            System.out.println("|Process Warehouse| Adding the most current process to ready queue");
             osController.changeProcessStateToReady(process);
             if (OS.isPriorityQueueMethod())
             {
@@ -143,38 +142,38 @@ public class systemProcessStorage<V>
 
             else if (OS.isRoundRobinMethod())
             {
-                Utilities.print("In PWH: Add most current process to ready queue in Round Robin");
-                this.moveCurrentProcessToTheEndOfReadyQueue(process);
+                System.out.println("|Process Warehouse| Adding the most current process to ready queue in Round Robin");
+                this.moveCurrentProcessToEndOfReadyQueue(process);
             }
             Utilities.printBreakLine();
         }
         catch (Exception e)
         {
-            Utilities.print("Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
-    public Process getMostCurrentProcessFromReadyQueue()
+    public Process retrieveMostCurrentProcessInReadyQueue()
     {
         if (OS.isRoundRobinMethod())
         {
             if (!queueContainsNothing(readyQueue))
             {
-                Utilities.print("In PWH: Remove most current process from ready queue");
+                System.out.println("|Process Warehouse| Remove most current process from ready queue");
                 Process process = this.readyQueue.poll();
-                Utilities.print("ID of poll off process:" + process.pcb.getId());
+                System.out.println("Poll off process ID:" + process.pcb.returnId());
                 return process;
             }
         }
         return null;
     }
 
-    public void moveCurrentProcessToTheEndOfReadyQueue(Process process)
+    public void moveCurrentProcessToEndOfReadyQueue(Process process)
     {
         try
         {
             if (!Utilities.isValid(process)) throw new IllegalArgumentException("The process is not valid");
-            Utilities.print("In PWH: Process ID: " + process.pcb.getId()+" has been moved to the end of ready queue");
+            System.out.println("|Process Warehouse| Process ID: " + process.pcb.returnId()+" has been moved to the end of the ready queue");
             this.readyQueue.add(process);
         }
         catch (Exception e)
@@ -183,15 +182,15 @@ public class systemProcessStorage<V>
         }
     }
 
-    public Process searchProcessById(int id)
+    public Process searchWithProcessId(int id)
     {
         Iterator<Process> itr = this.readyQueueInLinkedList.iterator();
 
         while (itr.hasNext())
         {
-            Process currentProcess = itr.next();
-            int currentId = currentProcess.pcb.getId();
-            if (currentId == id) return currentProcess;
+            Process realtimeProcess = itr.next();
+            int currentId = realtimeProcess.pcb.returnId();
+            if (currentId == id) return realtimeProcess;
         }
         return null;
     }

@@ -15,7 +15,7 @@ public class PCB implements iPCB {
         this.burstTime = 0;
     }
 
-    public int getId() {
+    public int returnId() {
         return id;
     }
 
@@ -57,6 +57,6 @@ public class PCB implements iPCB {
 
     @Override
     public void printLog() {
-        System.out.println("Process id: " + this.getId() + "\nProcess Priority" + this.getPriority());
+        System.out.println("Process id: " + this.returnId() + "\nProcess Priority" + this.getPriority());
     }
 }

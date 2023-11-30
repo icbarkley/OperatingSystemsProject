@@ -57,13 +57,13 @@ public class Scheduler {
 
         if (OS.isPriorityQueueMethod()) {
             com.company.Process process = getPriorityQueueProcess();
-            Utilities.printSubLine("In scheduler: The retrieved process id: " + process.pcb.getId());
+            Utilities.printSubLine("In scheduler: The retrieved process id: " + process.pcb.returnId());
             return process;
         }
 
         if (OS.isRoundRobinMethod()) {
             Process process = getRoundRobinProcess();
-            Utilities.printSubLine("In scheduler: The retrieved process id: " + process.pcb.getId());
+            Utilities.printSubLine("In scheduler: The retrieved process id: " + process.pcb.returnId());
             return process;
         }
         return null;
@@ -72,7 +72,7 @@ public class Scheduler {
     public Process getPriorityQueueProcess() {
         if (priorityQueue.size() > 0) {
             int id = priorityQueue.remove();
-            return this.systemProcessStorage.searchProcessById(id);
+            return this.systemProcessStorage.searchWithProcessId(id);
         } else {
             Utilities.print("Priority Queue is empty");
             return null;
@@ -86,7 +86,7 @@ public class Scheduler {
                 Utilities.print("The ready queue is empty");
                 return null;
             }
-            process = this.systemProcessStorage.getMostCurrentProcessFromReadyQueue();
+            process = this.systemProcessStorage.retrieveMostCurrentProcessInReadyQueue();
         } catch (Exception e) {
             Utilities.errorMsg(e.getMessage());
         }
@@ -110,8 +110,8 @@ public class Scheduler {
         try {
             // Very crucial condition check to separate the 2 thread
             // If specify same properties, one thread can know and change data of another thread
-            if (process.pcb.getId() > 0 || process.pcb.getPriority() != 0) {
-                idAndBurstTimeMap.put(process.pcb.getId(),
+            if (process.pcb.returnId() > 0 || process.pcb.getPriority() != 0) {
+                idAndBurstTimeMap.put(process.pcb.returnId(),
                         process.pcb.getPriority());
                 return true;
             } else {

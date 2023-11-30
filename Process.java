@@ -7,7 +7,7 @@ public abstract class Process {
     public abstract void toWait(); // advanced function if implement waitQueue
     public abstract void toBlocked(); // advanced function if implement blockQueue
     public Process getProcessById(int id) {
-        if (this.pcb.getId() == id) return this;
+        if (this.pcb.returnId() == id) return this;
         return null;
     }
 }

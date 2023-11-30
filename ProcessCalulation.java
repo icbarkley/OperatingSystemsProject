@@ -8,13 +8,13 @@ public class ProcessCalulation extends Process {
     public ProcessCalulation(PCB processControlBlock) {
         this.pcb = processControlBlock;
         this.isFinished = false;
-        Utilities.print("A new calculate process with id:" + this.pcb.getId() + " is created.");
+        Utilities.print("A new calculate process with id:" + this.pcb.returnId() + " is created.");
     }
 
     @Override
     public void toExecute() {
         if (OS.isPriorityQueueMethod()) {
-            Utilities.print("Process id:" + this.pcb.getId()
+            Utilities.print("Process id:" + this.pcb.returnId()
                     + " is being executed");
 
 
@@ -24,7 +24,7 @@ public class ProcessCalulation extends Process {
         }
 
         if (OS.isRoundRobinMethod()) {
-            Utilities.print("Process id:" + this.pcb.getId()
+            Utilities.print("Process id:" + this.pcb.returnId()
                     + " is being executed for " + systemDispatcher.timeQuantum + " time quantum.");
             int newBurstTime = this.pcb.getBurstTime() - 1;
             if  (newBurstTime <= 0) {
@@ -38,7 +38,7 @@ public class ProcessCalulation extends Process {
 
     @Override
     public void toTerminate() {
-        Utilities.print("Process id:" + this.pcb.getId()
+        Utilities.print("Process id:" + this.pcb.returnId()
                 + " is terminated");
         OS.setIsExecutingAProcess(false);
     }

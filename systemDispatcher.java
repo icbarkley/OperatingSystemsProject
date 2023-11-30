@@ -38,8 +38,8 @@ public class systemDispatcher {
             if (!OS.isExecutingAProcess())
             {
                 Process process = this.getProcessFromScheduler();
-                this.systemProcessStorage.removeProcessFromReadyQueueInLinkedListById(process.pcb.getId());
-                Utilities.print("In Dispatcher: process id: " + process.pcb.getId() + "- priority: " + process.pcb.getPriority());
+                this.systemProcessStorage.removeProcessFromReadyQueueInLinkedListById(process.pcb.returnId());
+                Utilities.print("In Dispatcher: process id: " + process.pcb.returnId() + "- priority: " + process.pcb.getPriority());
 
                 changeStateToRun(process);
                 OS.setIsExecutingAProcess(true);
@@ -65,7 +65,7 @@ public class systemDispatcher {
     public void startWithRoundRobinMethod()
     {
             Process process = this.getProcessFromScheduler();
-            Utilities.print("In Dispatcher: process id: " + process.pcb.getId() + "- total time needed to finish: " + process.pcb.getBurstTime());
+            Utilities.print("In Dispatcher: process id: " + process.pcb.returnId() + "- total time needed to finish: " + process.pcb.getBurstTime());
             changeStateToRun(process);
             this.systemCPU.setCurrent(process);
             this.systemCPU.toExecute();
@@ -73,7 +73,7 @@ public class systemDispatcher {
             if (process.pcb.getBurstTime() > 0)
             {
                 osController.changeProcessStateToReady(process);
-                this.systemProcessStorage.moveCurrentProcessToTheEndOfReadyQueue(process);
+                this.systemProcessStorage.moveCurrentProcessToEndOfReadyQueue(process);
             }
             else
             {
@@ -120,7 +120,7 @@ public class systemDispatcher {
         {
             process.pcb.setState("New");
             Utilities.printHeadLine("In Dispatcher: Change the process with id " +
-                    process.pcb.getId() + " to state " + process.pcb.getState());
+                    process.pcb.returnId() + " to state " + process.pcb.getState());
         }
         catch (Exception e)
         {
@@ -134,7 +134,7 @@ public class systemDispatcher {
         {
             process.pcb.setState("Run");
             Utilities.printHeadLine("In Dispatcher: Change the process with id " +
-                    process.pcb.getId() + " to state " + process.pcb.getState());
+                    process.pcb.returnId() + " to state " + process.pcb.getState());
         }
         catch (Exception e)
         {
@@ -148,7 +148,7 @@ public class systemDispatcher {
         {
             process.pcb.setState("Ready");
             Utilities.printHeadLine("In Dispatcher: Change the process with id " +
-                    process.pcb.getId() + " to state " + process.pcb.getState());
+                    process.pcb.returnId() + " to state " + process.pcb.getState());
         }
         catch (Exception e)
         {
@@ -162,7 +162,7 @@ public class systemDispatcher {
         {
             process.pcb.setState("Completed");
             Utilities.printHeadLine("In Dispatcher: Change the process with id " +
-                    process.pcb.getId() + " to state " + process.pcb.getState());
+                    process.pcb.returnId() + " to state " + process.pcb.getState());
             Utilities.printBreakLine();
         }
         catch (Exception e)
