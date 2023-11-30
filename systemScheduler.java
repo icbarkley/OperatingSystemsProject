@@ -45,27 +45,19 @@ public class systemScheduler
     {
         if (OS.isPriorityQueue())
         {
-//            HashMap (key:id - value:priority) to keep history of all the processes that had been added either ready or terminated
-//            From HashMap create the priority queue of Ids based on the process priority
             createidAndBurstTimeMap();
             createPriorityQueue();
         }
 
         if (OS.isRoundRobin())
         {
-//             No need to create additional data structure since the process is poll off from ready Queue
-//            from ProcessWareHouse
             System.out.println("{Scheduler: Picked Process from the Ready Queue}");
             return;
         }
     }
 
-//     take a process from priority Q, take it out of ready Q
     public Process getProcess()
     {
-//        depend on the method, if PQ then pull the id out of PQ, search for that process, execute that process and erase that process
-//        if RR, just pull the most current process, execute a while and put it back
-
         if (OS.isPriorityQueue())
         {
             com.company.Process process = getPriorityQueueProcess();
@@ -116,9 +108,6 @@ public class systemScheduler
         return process;
     }
 
-
-//  Priority scheduling algorithm related functions
-//  create the hashmap to later on feed to priority queue
     public void createidAndBurstTimeMap()
     {
         Collection readyQueue = this.systemProcessStorage.getReadyQueue();
@@ -135,8 +124,6 @@ public class systemScheduler
     {
         try
         {
-            // Very crucial condition check to separate the 2 thread
-            // If specify same properties, one thread can know and change data of another thread
             if (process.pcb.retrieveId() > 0 || process.pcb.retrievePriority() != 0)
             {
                 idAndBurstTimeMap.put(process.pcb.retrieveId(),
@@ -171,7 +158,6 @@ public class systemScheduler
         }
     }
 
-    // Printing methods
     public void printPriorityQueue()
     {
          for (int id : priorityQueue)
