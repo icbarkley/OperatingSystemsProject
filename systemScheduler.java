@@ -1,4 +1,4 @@
-package com.company;
+package com.noahbarkos;
 
 import java.util.*;
 
@@ -8,13 +8,13 @@ public class systemScheduler
     Map<Integer, Integer> idAndBurstTimeMap;
     systemStorage systemProcessStorage;
     systemDispatcher systemDispatcher;
-    OS osController;
+    OperatingSystem operatingSystemController;
 
-    public systemScheduler(OS osController)
+    public systemScheduler(OperatingSystem operatingSystemController)
     {
         this.priorityQueue = new LinkedList<Integer>();
         this.idAndBurstTimeMap = new HashMap<Integer, Integer>();
-        this.osController = osController;
+        this.operatingSystemController = operatingSystemController;
     }
 
     public void connectToProcessStorage(systemStorage systemProcessStorage)
@@ -25,7 +25,7 @@ public class systemScheduler
         }
         catch (Exception e)
         {
-            Utilities.errorMsg(e.getMessage());
+            miscSystemProcesses.errorMsg(e.getMessage());
         }
     }
 
@@ -37,44 +37,44 @@ public class systemScheduler
         }
         catch (Exception e)
         {
-            Utilities.errorMsg(e.getMessage());
+            miscSystemProcesses.errorMsg(e.getMessage());
         }
     }
 
     public void start()
     {
-        if (OS.isPriorityQueue())
+        if (OperatingSystem.isPriorityQueue())
         {
             createidAndBurstTimeMap();
             createPriorityQueue();
         }
 
-        if (OS.isRoundRobin())
+        if (OperatingSystem.isRoundRobin())
         {
             System.out.println("{Scheduler: Picked Process from the Ready Queue}");
             return;
         }
     }
 
-    public Process getProcess()
+    public systemProcessManager getProcess()
     {
-        if (OS.isPriorityQueue())
+        if (OperatingSystem.isPriorityQueue())
         {
-            com.company.Process process = getPriorityQueueProcess();
-            System.out.println("{Scheduler: Retrieved Process ID: " + process.pcb.retrieveId() + "}");
-            return process;
+            systemProcessManager systemProcessManager = getPriorityQueueProcess();
+            System.out.println("{Scheduler: Retrieved Process ID: " + systemProcessManager.systemProcessControlBlock.retrieveId() + "}");
+            return systemProcessManager;
         }
 
-        if (OS.isRoundRobin())
+        if (OperatingSystem.isRoundRobin())
         {
-            Process process = getRoundRobinProcess();
-            System.out.println("{Scheduler: Retrieved Process ID: " + process.pcb.retrieveId() + "}");
-            return process;
+            systemProcessManager systemProcessManager = getRoundRobinProcess();
+            System.out.println("{Scheduler: Retrieved Process ID: " + systemProcessManager.systemProcessControlBlock.retrieveId() + "}");
+            return systemProcessManager;
         }
         return null;
     }
 
-    public Process getPriorityQueueProcess()
+    public systemProcessManager getPriorityQueueProcess()
     {
         if (priorityQueue.size() > 0)
         {
@@ -88,9 +88,9 @@ public class systemScheduler
         }
     }
 
-    public Process getRoundRobinProcess()
+    public systemProcessManager getRoundRobinProcess()
     {
-        Process process = null;
+        systemProcessManager systemProcessManager = null;
         try
         {
             if (this.systemProcessStorage.queueContainsNothing(this.systemProcessStorage.readyQueue))
@@ -99,13 +99,13 @@ public class systemScheduler
                 return null;
             }
 
-            process = this.systemProcessStorage.retrieveMostRecentProcessInReadyQueue();
+            systemProcessManager = this.systemProcessStorage.retrieveMostRecentProcessInReadyQueue();
         }
         catch (Exception e)
         {
-            Utilities.errorMsg(e.getMessage());
+            miscSystemProcesses.errorMsg(e.getMessage());
         }
-        return process;
+        return systemProcessManager;
     }
 
     public void createidAndBurstTimeMap()
@@ -113,21 +113,21 @@ public class systemScheduler
         Collection readyQueue = this.systemProcessStorage.getReadyQueue();
         for (Object process : readyQueue)
         {
-            addProcess((Process) process);
+            addProcess((systemProcessManager) process);
         }
         System.out.println("{Scheduler: Create HashMap for PQ}");
         printHashMap();
     }
 
 
-    public boolean addProcess(Process process)
+    public boolean addProcess(systemProcessManager systemProcessManager)
     {
         try
         {
-            if (process.pcb.retrieveId() > 0 || process.pcb.retrievePriority() != 0)
+            if (systemProcessManager.systemProcessControlBlock.retrieveId() > 0 || systemProcessManager.systemProcessControlBlock.retrievePriority() != 0)
             {
-                idAndBurstTimeMap.put(process.pcb.retrieveId(),
-                        process.pcb.retrievePriority());
+                idAndBurstTimeMap.put(systemProcessManager.systemProcessControlBlock.retrieveId(),
+                        systemProcessManager.systemProcessControlBlock.retrievePriority());
                 return true;
             }
             else
@@ -138,7 +138,7 @@ public class systemScheduler
         }
         catch (Exception e)
         {
-            Utilities.errorMsg(e.getMessage());
+            miscSystemProcesses.errorMsg(e.getMessage());
             return false;
         }
     }

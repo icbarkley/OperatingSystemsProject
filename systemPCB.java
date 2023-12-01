@@ -1,6 +1,6 @@
-package com.company;
+package com.noahbarkos;
 
-public class PCB implements iPCB
+public class systemPCB implements iPCB
 {
     private int id;
     private String state;
@@ -8,7 +8,7 @@ public class PCB implements iPCB
     private String ioInfo;
     private int burstTime;
 
-    PCB()
+    systemPCB()
     {
         this.id = 0;
         this.state = "";

@@ -1,8 +1,8 @@
-package com.company;
+package com.noahbarkos;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Notifier
+public class systemNotifier
 {
     Timer systemTimer;
     int numberCount = 0;
@@ -10,7 +10,7 @@ public class Notifier
     int realtimeCount = 0;
     int realtimeLimit = 0;
     boolean switched = false;
-    public Notifier()
+    public systemNotifier()
     {
         systemTimer = new Timer();
     }
@@ -62,7 +62,7 @@ public class Notifier
         {
             System.out.println("Timer task will be called every second");
             numberCount++;
-            OS.setIsExecuting(false);
+            OperatingSystem.setIsExecuting(false);
 
             if (numberCount == setLimit)
             {

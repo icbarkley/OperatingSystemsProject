@@ -1,13 +1,13 @@
-package com.company;
+package com.noahbarkos;
 
 import java.util.Collection;
 
-public class OS
+public class OperatingSystem
 {
     systemStorage pool;
     systemScheduler systemScheduler;
     systemDispatcher systemDispatcher;
-    CPU cpu;
+    systemCPU systemCpu;
 
     public boolean isSystemFinished()
     {
@@ -29,7 +29,7 @@ public class OS
 
     public static void setIsExecuting(boolean isExecuting)
     {
-        OS.isExecuting = isExecuting;
+        OperatingSystem.isExecuting = isExecuting;
     }
 
     public static boolean isExecuting;
@@ -41,33 +41,33 @@ public class OS
 
     public static void setProcessID(int processID)
     {
-        OS.processID = processID;
+        OperatingSystem.processID = processID;
     }
 
     public static int processID;
 
     public static void setMethod(String method)
     {
-        OS.method = method;
+        OperatingSystem.method = method;
     }
 
-    public OS()
+    public OperatingSystem()
     {
         this.pool = new systemStorage(this);
         this.systemScheduler = new systemScheduler(this);
         this.systemDispatcher = new systemDispatcher(this);
-        this.cpu = new CPU();
+        this.systemCpu = new systemCPU();
     }
 
-    public OS(systemStorage pool, systemScheduler systemScheduler, systemDispatcher systemDispatcher, CPU cpu)
+    public OperatingSystem(systemStorage pool, systemScheduler systemScheduler, systemDispatcher systemDispatcher, systemCPU systemCpu)
     {
         this.pool = pool;
         this.systemScheduler = systemScheduler;
         this.systemDispatcher = systemDispatcher;
-        this.cpu = cpu;
+        this.systemCpu = systemCpu;
     }
 
-    public OS getOSController()
+    public OperatingSystem getOSController()
     {
 
         return this;
@@ -114,31 +114,31 @@ public class OS
             System.out.println("||Still working...||");
     }
 
-    public void addProcess(Process process)
+    public void addProcess(systemProcessManager systemProcessManager)
     {
         try
         {
             System.out.println("||New process has been created in the Operating System||");
 
-            this.systemDispatcher.changeStateToNew(process);
+            this.systemDispatcher.changeStateToNew(systemProcessManager);
 
             if (isPriorityQueue())
             {
-                this.pool.addProcessToJobQueue(process);
+                this.pool.addProcessToJobQueue(systemProcessManager);
                 this.pool.removeMostCurrentProcessFromJobQueue();
-                this.pool.addProcessToReadyQueue(process);
+                this.pool.addProcessToReadyQueue(systemProcessManager);
             }
 
             if (isRoundRobin())
             {
-                this.pool.addProcessToJobQueue(process);
+                this.pool.addProcessToJobQueue(systemProcessManager);
                 this.pool.removeMostCurrentProcessFromJobQueue();
-                this.pool.addProcessToReadyQueue(process);
+                this.pool.addProcessToReadyQueue(systemProcessManager);
             }
         }
         catch (Exception e)
         {
-            Utilities.errorMsg(e.getMessage());
+            miscSystemProcesses.errorMsg(e.getMessage());
         }
     }
 
@@ -147,17 +147,17 @@ public class OS
     static boolean isPriorityQueue()
     {
 
-        return  OS.method.equals("PQ");
+        return  OperatingSystem.method.equals("PQ");
     }
 
     static boolean isRoundRobin()
     {
-        return  OS.method.equals("RR");
+        return  OperatingSystem.method.equals("RR");
     }
 
     static String retrieveMethod()
     {
-        return OS.method;
+        return OperatingSystem.method;
     }
 
 
@@ -192,18 +192,18 @@ public class OS
         this.systemDispatcher = systemDispatcher;
     }
 
-    public CPU retrieveCPU()
+    public systemCPU retrieveCPU()
     {
-        return cpu;
+        return systemCpu;
     }
 
-    public void setCpu(CPU cpu)
+    public void setCpu(systemCPU systemCpu)
     {
-        this.cpu = cpu;
+        this.systemCpu = systemCpu;
     }
 
-    public void changeStateToReady(Process process)
+    public void changeStateToReady(systemProcessManager systemProcessManager)
     {
-        this.systemDispatcher.changeStateToReady(process);
+        this.systemDispatcher.alterStateToReady(systemProcessManager);
     }
 }

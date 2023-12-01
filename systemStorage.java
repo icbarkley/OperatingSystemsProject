@@ -1,4 +1,4 @@
-package com.company;
+package com.noahbarkos;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -7,33 +7,33 @@ import java.util.LinkedList;
 
 public class systemStorage<V>
 {
-    Queue<Process> jobQueue;
-    Queue<Process> readyQueue;
-    LinkedList<Process> readyLinkedListQueue;
-    Queue<Process> waitQueue;
-    Queue<Process> blockQueue;
+    Queue<systemProcessManager> jobQueue;
+    Queue<systemProcessManager> readyQueue;
+    LinkedList<systemProcessManager> readyLinkedListQueue;
+    Queue<systemProcessManager> waitQueue;
+    Queue<systemProcessManager> blockQueue;
     systemDispatcher systemDispatcher;
-    OS osController;
+    OperatingSystem operatingSystemController;
 
-    public systemStorage(OS os)
+    public systemStorage(OperatingSystem operatingSystem)
     {
         this.jobQueue = new LinkedList<>();
         this.readyQueue = new LinkedList<>();
         this.waitQueue = new LinkedList<>();
         this.blockQueue = new LinkedList<>();
         this.readyLinkedListQueue = new LinkedList<>();
-        this.osController = os;
+        this.operatingSystemController = operatingSystem;
 
     }
 
 
-    public Collection<Process> getReadyQueue()
+    public Collection<systemProcessManager> getReadyQueue()
     {
-        if (OS.isPriorityQueue())
+        if (OperatingSystem.isPriorityQueue())
         {
             return getReadyQueuePQ();
         }
-        if (OS.isRoundRobin())
+        if (OperatingSystem.isRoundRobin())
         {
             return getReadyQueueRR();
         }
@@ -48,28 +48,28 @@ public class systemStorage<V>
         }
         catch (Exception e)
         {
-            Utilities.errorMsg(e.getMessage());
+            miscSystemProcesses.errorMsg(e.getMessage());
         }
     }
 
-    public Queue<Process> getReadyQueueRR()
+    public Queue<systemProcessManager> getReadyQueueRR()
     {
         return this.readyQueue;
     }
 
-    public LinkedList<Process> getReadyQueuePQ()
+    public LinkedList<systemProcessManager> getReadyQueuePQ()
     {
         return this.readyLinkedListQueue;
     }
 
-    public boolean addProcessToJobQueue(Process process)
+    public boolean addProcessToJobQueue(systemProcessManager systemProcessManager)
     {
         try
         {
             System.out.println("|Storage|");
             System.out.println("Adding the most recent process to job queue");
 
-            this.jobQueue.add(process);
+            this.jobQueue.add(systemProcessManager);
             return true;
         }
         catch (Exception e)
@@ -79,15 +79,15 @@ public class systemStorage<V>
         }
     }
 
-    public Process removeMostCurrentProcessFromJobQueue()
+    public systemProcessManager removeMostCurrentProcessFromJobQueue()
     {
         try
         {
             System.out.println("Removing the most recent process from job queue");
             if (!queueContainsNothing(jobQueue))
             {
-                Process process = this.jobQueue.remove();
-                return process;
+                systemProcessManager systemProcessManager = this.jobQueue.remove();
+                return systemProcessManager;
             }
             else
                 return null;
@@ -99,14 +99,14 @@ public class systemStorage<V>
         }
     }
 
-    public void addProcessToReadyQueueInLinkedList(Process process)
+    public void addProcessToReadyQueueInLinkedList(systemProcessManager systemProcessManager)
     {
         try
         {
             System.out.println("|Storage|");
             System.out.println("Adding most recent process to ready queue linked list");
-            this.readyLinkedListQueue.add(process);
-            Utilities.printBreakLine();
+            this.readyLinkedListQueue.add(systemProcessManager);
+            System.out.println("\n");
 
         }
         catch (Exception e)
@@ -120,8 +120,8 @@ public class systemStorage<V>
         try
         {
             if (id <= 0) throw new IllegalArgumentException("Invalid id");
-            Process process = searchWithProcessId(id);
-            this.readyLinkedListQueue.remove(process);
+            systemProcessManager systemProcessManager = searchWithProcessId(id);
+            this.readyLinkedListQueue.remove(systemProcessManager);
             System.out.println("|Storage| Removing process (ID:" + id + ") out of the ready queue");
         }
         catch (Exception e)
@@ -130,23 +130,23 @@ public class systemStorage<V>
         }
     }
 
-    public void addProcessToReadyQueue(Process process)
+    public void addProcessToReadyQueue(systemProcessManager systemProcessManager)
     {
         try
         {
             System.out.println("|Storage| Adding the most recent process to the ready queue");
-            osController.changeStateToReady(process);
-            if (OS.isPriorityQueue())
+            operatingSystemController.changeStateToReady(systemProcessManager);
+            if (OperatingSystem.isPriorityQueue())
             {
-                this.addProcessToReadyQueueInLinkedList(process);
+                this.addProcessToReadyQueueInLinkedList(systemProcessManager);
             }
 
-            else if (OS.isRoundRobin())
+            else if (OperatingSystem.isRoundRobin())
             {
                 System.out.println("|Storage| Adding the most recent process to the ready queue in Round Robin");
-                this.moveCurrentProcessToEndOfReadyQueue(process);
+                this.moveCurrentProcessToEndOfReadyQueue(systemProcessManager);
             }
-            Utilities.printBreakLine();
+            System.out.println("\n");
         }
         catch (Exception e)
         {
@@ -154,80 +154,88 @@ public class systemStorage<V>
         }
     }
 
-    public Process retrieveMostRecentProcessInReadyQueue()
+    public systemProcessManager retrieveMostRecentProcessInReadyQueue()
     {
-        if (OS.isRoundRobin())
+        if (OperatingSystem.isRoundRobin())
         {
             if (!queueContainsNothing(readyQueue))
             {
                 System.out.println("|Storage| Remove most recent process from the ready queue");
-                Process pwhProcess = this.readyQueue.poll();
-                System.out.println("Poll off process ID:" + pwhProcess.pcb.retrieveId());
-                return pwhProcess;
+                systemProcessManager pwhSystemProcessManager = this.readyQueue.poll();
+                System.out.println("Poll off process ID:" + pwhSystemProcessManager.systemProcessControlBlock.retrieveId());
+                return pwhSystemProcessManager;
             }
         }
         return null;
     }
 
-    public void moveCurrentProcessToEndOfReadyQueue(Process process)
+    public void moveCurrentProcessToEndOfReadyQueue(systemProcessManager systemProcessManager)
     {
         try
         {
-            if (!Utilities.isValid(process)) throw new IllegalArgumentException("This process is not valid");
-            System.out.println("|Storage| Process ID: " + process.pcb.retrieveId()+" has been moved to the end of the ready queue");
-            this.readyQueue.add(process);
+            if (!miscSystemProcesses.isValid(systemProcessManager)) throw new IllegalArgumentException("This process is not valid");
+            System.out.println("|Storage| Process ID: " + systemProcessManager.systemProcessControlBlock.retrieveId()+" has been moved to the end of the ready queue");
+            this.readyQueue.add(systemProcessManager);
         }
         catch (Exception e)
         {
-            Utilities.errorMsg(e.getMessage());
+            miscSystemProcesses.errorMsg(e.getMessage());
         }
     }
 
-    public Process searchWithProcessId(int id)
+    public systemProcessManager searchWithProcessId(int id)
     {
-        Iterator<Process> itr = this.readyLinkedListQueue.iterator();
+        Iterator<systemProcessManager> itr = this.readyLinkedListQueue.iterator();
 
         while (itr.hasNext())
         {
-            Process realtimeProcess = itr.next();
-            int currentId = realtimeProcess.pcb.retrieveId();
-            if (currentId == id) return realtimeProcess;
+            systemProcessManager realtimeSystemProcessManager = itr.next();
+            int currentId = realtimeSystemProcessManager.systemProcessControlBlock.retrieveId();
+            if (currentId == id) return realtimeSystemProcessManager;
         }
         return null;
     }
 
-    public boolean isInStorage(Process process)
+    public boolean withinStorage(systemProcessManager systemProcessManager)
     {
-        return (withinJobQueue(process) || withinReadyQueue(process) || withinBlockQueue(process) || withinWaitQueue(process));
+        return (withinJobQueue(systemProcessManager) || withinReadyQueue(systemProcessManager) || withinBlockQueue(systemProcessManager) || withinWaitQueue(systemProcessManager));
     }
 
-    public Queue<Process> getQueueOfCurrentProcess(Process process)
+    public Queue<systemProcessManager> retrieveQueueOfCurrentProcess(systemProcessManager systemProcessManager)
     {
-        if (withinReadyQueue(process)) return readyQueue;
-        if (withinWaitQueue(process)) return waitQueue;
-        if (withinJobQueue(process)) return jobQueue;
-        if (withinBlockQueue(process)) return blockQueue;
+        if (withinReadyQueue(systemProcessManager))
+            return readyQueue;
+
+        if (withinWaitQueue(systemProcessManager))
+            return waitQueue;
+
+        if (withinJobQueue(systemProcessManager))
+            return jobQueue;
+
+        if (withinBlockQueue(systemProcessManager))
+            return blockQueue;
+
         return null;
     }
 
-    public boolean withinJobQueue(Process process)
+    public boolean withinJobQueue(systemProcessManager systemProcessManager)
     {
-        return jobQueue.contains(process);
+        return jobQueue.contains(systemProcessManager);
     }
 
-    public boolean withinReadyQueue(Process process)
+    public boolean withinReadyQueue(systemProcessManager systemProcessManager)
     {
-        return readyQueue.contains(process);
+        return readyQueue.contains(systemProcessManager);
     }
 
-    public boolean withinWaitQueue(Process process)
+    public boolean withinWaitQueue(systemProcessManager systemProcessManager)
     {
-        return waitQueue.contains(process);
+        return waitQueue.contains(systemProcessManager);
     }
 
-    public boolean withinBlockQueue(Process process)
+    public boolean withinBlockQueue(systemProcessManager systemProcessManager)
     {
-        return blockQueue.contains(process);
+        return blockQueue.contains(systemProcessManager);
     }
 
     public boolean queueContainsNothing(Queue queue)
@@ -235,8 +243,8 @@ public class systemStorage<V>
         return queue.isEmpty();
     }
     
-    public void displayQueue() {
-        Iterator<Process> itr = readyQueue.iterator();
+    public void showQueue() {
+        Iterator<systemProcessManager> itr = readyQueue.iterator();
 
         while (itr.hasNext())
         {

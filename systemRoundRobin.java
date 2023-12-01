@@ -1,4 +1,4 @@
-package com.company;
+package com.noahbarkos;
 
 public class systemRoundRobin implements Runnable
 {
@@ -18,27 +18,27 @@ public class systemRoundRobin implements Runnable
         try
         {
             System.out.println("||Starting Up The NoahBark OS||");
-            OS os = new OS();
-            OS.setMethod("RR");
+            OperatingSystem operatingSystem = new OperatingSystem();
+            OperatingSystem.setMethod("RR");
 
-            PCB pcb3 = new PCB();
-            pcb3.setId(3);
-            pcb3.setBurstTime(3);
-            Process time3= new ProcessCalulation(pcb3);
+            systemPCB systemPcb3 = new systemPCB();
+            systemPcb3.setId(3);
+            systemPcb3.setBurstTime(3);
+            systemProcessManager time3= new systemProcessManagerCalulation(systemPcb3);
 
-            PCB pcb4 = new PCB();
-            pcb4.setId(4);
-            pcb4.setBurstTime(2);
-            Process time4 = new ProcessCalulation(pcb4);
+            systemPCB systemPcb4 = new systemPCB();
+            systemPcb4.setId(4);
+            systemPcb4.setBurstTime(2);
+            systemProcessManager time4 = new systemProcessManagerCalulation(systemPcb4);
 
 
-            os.addProcess(time3);
-            os.addProcess(time4);
-            os.start();
+            operatingSystem.addProcess(time3);
+            operatingSystem.addProcess(time4);
+            operatingSystem.start();
         }
         catch (Exception e)
         {
-            Utilities.errorMsg(e.getMessage());
+            miscSystemProcesses.errorMsg(e.getMessage());
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.company;
+package com.noahbarkos;
 
 public class systemPriorityQueue implements Runnable
 {
@@ -16,26 +16,26 @@ public class systemPriorityQueue implements Runnable
         try
         {
             System.out.println("||Starting Up The NoahBark OS||");
-            OS mainOS = new OS();
-            OS.setMethod("PQ");
+            OperatingSystem mainOperatingSystem = new OperatingSystem();
+            OperatingSystem.setMethod("PQ");
 
-            PCB processcontrolblock1 = new PCB();
+            systemPCB processcontrolblock1 = new systemPCB();
             processcontrolblock1.setId(1);
             processcontrolblock1.setPriority(6);
-            Process time = new ProcessCalulation(processcontrolblock1);
+            systemProcessManager time = new systemProcessManagerCalulation(processcontrolblock1);
 
-            PCB processcontrolblock2 = new PCB();
+            systemPCB processcontrolblock2 = new systemPCB();
             processcontrolblock2.setId(2);
             processcontrolblock2.setPriority(1);
-            Process time2 = new ProcessCalulation(processcontrolblock2);
+            systemProcessManager time2 = new systemProcessManagerCalulation(processcontrolblock2);
 
-            mainOS.addProcess(time);
-            mainOS.addProcess(time2);
-            mainOS.start();
+            mainOperatingSystem.addProcess(time);
+            mainOperatingSystem.addProcess(time2);
+            mainOperatingSystem.start();
         }
         catch (Exception e)
         {
-            Utilities.errorMsg(e.getMessage());
+            miscSystemProcesses.errorMsg(e.getMessage());
         }
     }
 }
